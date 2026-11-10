@@ -16,6 +16,9 @@ public class StaticValues
     public static long S22_StartTime;
     public static string MODE;
 
+    // Simulation mode: no instrument / DUT / SFIS access, test values come from the simulation CSV
+    public static bool SIMULATION = true;
+
     public static bool goldenTest;
 
     // step compare
@@ -237,6 +240,7 @@ public class Config
     public static string fileCounter;
     public static string fileGolden;
     public static string fileCalibration;
+    public static string fileSimCsv;    // simulation data CSV (column C = measured)
 
     // SFIS
     public static string sfisIp;

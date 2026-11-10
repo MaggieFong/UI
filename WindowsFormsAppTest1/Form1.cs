@@ -168,6 +168,12 @@ namespace WindowsFormsAppTest1
                 Config.sfisEnable = true; //Enable SFIS
             }
 
+            if (StaticValues.SIMULATION)
+            {
+                this.Text += " [SIMULATION]";
+                Config.sfisEnable = false; //No SFIS in simulation mode
+            }
+
             //try
             //{
             //    StaticValues.sSerialPort = "COM" + Dut.comPort;
@@ -191,7 +197,8 @@ namespace WindowsFormsAppTest1
                 //maggie 11-27
                 cts = new CancellationTokenSource();
                 rbtUSB.Checked = true;
-                btnRefresh.PerformClick();
+                if (!StaticValues.SIMULATION)
+                    btnRefresh.PerformClick();      //scan VISA instruments
                 btnOpen.Text = Resources.OpenString;
                 cboBaudRate.DataSource = baudRate;
                 cboBaudRate.SelectedIndex = 3;
@@ -212,7 +219,7 @@ namespace WindowsFormsAppTest1
                 if (CancelDisplayForm)
                     Close();
 
-                if (!Config.debugEnable)
+                if (!Config.debugEnable || StaticValues.SIMULATION)
                 {
                     ;
                     tabPageVISA.Parent = null;
@@ -902,6 +909,7 @@ namespace WindowsFormsAppTest1
         Task t = null;
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             string title = Text;
             t = Task.Factory.StartNew(() =>
             {
@@ -943,6 +951,7 @@ namespace WindowsFormsAppTest1
         bool isWritingError = false;
         private void btnWrite_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             isWritingError = false;
             if (string.IsNullOrEmpty(cboCommand.Text))
             {
@@ -983,6 +992,7 @@ namespace WindowsFormsAppTest1
 
         private void btnRead_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             ClearIfTextBoxOverFlow();
             string result;
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -1016,6 +1026,7 @@ namespace WindowsFormsAppTest1
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             if (btnOpen.Text == Resources.OpenString)   //Connect
             {
                 if (NewPortInstance())
@@ -1195,6 +1206,7 @@ namespace WindowsFormsAppTest1
                 Config.pathLog = iniConfig.iniReadValue("Path", "Log", null);
                 Config.fileCounter = iniConfig.iniReadValue("Path", "Counter", null) + "Counter.ini";
                 Config.fileCalibration = iniConfig.iniReadValue("Path", "Product Setting", null) + "Calibration.ini";
+                Config.fileSimCsv = iniConfig.iniReadValue("Simulation", "CSV_File", "");
 
                 Config.sfisIp = iniConfig.iniReadValue("SFIS", "Ip", "");
                 Config.sfisPort = Convert.ToInt32(iniConfig.iniReadValue("SFIS", "Port", "1024"));
@@ -1428,6 +1440,7 @@ namespace WindowsFormsAppTest1
 
         private void btn_DR2003_OnOff_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             IT6332c IT6332c;
             IT6332c = new IT6332c(Power_IT6332A.usbId);
             IT6332c.Connect();
@@ -1484,6 +1497,7 @@ namespace WindowsFormsAppTest1
 
         private void btn_initgpio_click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             try
             {
                 if (StaticValues.hwTestRPCDevice == null)
@@ -1571,6 +1585,7 @@ namespace WindowsFormsAppTest1
 
         private void btn_pullL_click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             try
             {
                 if (StaticValues.hwTestRPCDevice == null)
@@ -1598,6 +1613,7 @@ namespace WindowsFormsAppTest1
 
         private void btn_pullH_click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             try
             { 
                 if (StaticValues.hwTestRPCDevice == null)
@@ -1879,6 +1895,7 @@ namespace WindowsFormsAppTest1
 
         private void uC_Output_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             byte uCPin;
             ushort value;
 
@@ -2362,6 +2379,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_19v5_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             Console.WriteLine("radio_19v5_StateChanged");
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.Checked)
@@ -2404,6 +2422,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_3v3_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             RadioButton radioButton = (RadioButton)sender;
             if (radioButton.Checked)
             {
@@ -2429,6 +2448,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_TWLed_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             RadioButton radioButton = (RadioButton)sender;
             Console.WriteLine("radio_TWLed_StateChanged");
             try
@@ -2498,6 +2518,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_TOLed_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             RadioButton radioButton = (RadioButton)sender;
 
             try
@@ -2547,6 +2568,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_BWLed_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             RadioButton radioButton = (RadioButton)sender;
 
                 try
@@ -2597,6 +2619,7 @@ namespace WindowsFormsAppTest1
 
         private void radio_BOLed_StateChanged(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             RadioButton radioButton = (RadioButton)sender;
             
             try
@@ -2701,6 +2724,7 @@ namespace WindowsFormsAppTest1
         }
         private void button_Led_Config_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             try
             {
                 if (StaticValues.hwTestRPCDevice == null)
@@ -2827,6 +2851,7 @@ namespace WindowsFormsAppTest1
 
         private void button_FeasaA_Capture_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             richText_FeasaA.Clear();
 
             Feasa_LED myFS_LED_A = new Feasa_LED(Feasa_10F_A.comPort);
@@ -2911,6 +2936,7 @@ namespace WindowsFormsAppTest1
 
         private void readbutton_Click(object sender, EventArgs e)
         {
+            if (StaticValues.SIMULATION) return;      //no instrument access in simulation mode
             try
             {
                 if (StaticValues.hwTestRPCDevice == null)

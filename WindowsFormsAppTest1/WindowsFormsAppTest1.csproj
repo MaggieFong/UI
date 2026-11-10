@@ -155,6 +155,19 @@
     <Compile Include="Test Items\TestItemStep010.cs" />
     <Compile Include="Test Items\TestItemStep015.cs" />
     <Compile Include="Test Items\TestItemStep22.cs" />
+    <Compile Include="Test Items\SimTestItem.cs" />
+    <Compile Include="Test Items\TestItemStep020.cs" />
+    <Compile Include="Test Items\TestItemStep021.cs" />
+    <Compile Include="Test Items\TestItemStep082.cs" />
+    <Compile Include="Test Items\TestItemStep085.cs" />
+    <Compile Include="Test Items\TestItemStep097.cs" />
+    <Compile Include="Test Items\TestItemStep100_1P8s.cs" />
+    <Compile Include="Test Items\TestItemStep110.cs" />
+    <Compile Include="Test Items\TestItemStep117.cs" />
+    <Compile Include="Test Items\TestItemStep120.cs" />
+    <Compile Include="Test Items\TestItemStep130.cs" />
+    <Compile Include="Test Items\TestItemStep135.cs" />
+    <Compile Include="Test Items\TestItemStep137.cs" />
     <Compile Include="Test Items\TestItemStep350.cs" />
     <Compile Include="Test Items\TestItemStepIMU.cs" />
     <Compile Include="TestItemForm.cs" />
@@ -216,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="feasacom64.dll" />
+    <Content Include="9717622610240172_012909.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
