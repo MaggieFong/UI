@@ -1,0 +1,1669 @@
+﻿namespace WindowsFormsAppTest1
+{
+    partial class PhilipsEmeraldTestTool
+    {
+        /// <summary>
+        /// 設計工具所需的變數。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 清除任何使用中的資源。
+        /// </summary>
+        /// <param name="disposing">如果應該處置 Managed 資源則為 true，否則為 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form 設計工具產生的程式碼
+
+        /// <summary>
+        /// 此為設計工具支援所需的方法 - 請勿使用程式碼編輯器修改
+        /// 這個方法的內容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.workerTestProccess = new System.ComponentModel.BackgroundWorker();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.combo_serial = new System.Windows.Forms.ComboBox();
+            this.tabControlPattern = new System.Windows.Forms.TabControl();
+            this.tabPageAll = new System.Windows.Forms.TabPage();
+            this.labelSfisInfo = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelSfisResult = new System.Windows.Forms.Label();
+            this.richTextSfis = new System.Windows.Forms.RichTextBox();
+            this.labelTestResult = new System.Windows.Forms.Label();
+            this.labelPoccess = new System.Windows.Forms.Label();
+            this.gridViewTest = new System.Windows.Forms.DataGridView();
+            this.ColumnStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnMeasured = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnLL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnUL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnErrorCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageSetting = new System.Windows.Forms.TabPage();
+            this.labelAtmelPath = new System.Windows.Forms.Label();
+            this.btnAtmelPath = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.labelSerial = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnBarcode = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tabPageButton = new System.Windows.Forms.TabPage();
+            this.btn_READ = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cBox_portN = new System.Windows.Forms.ComboBox();
+            this.cB_Output = new System.Windows.Forms.CheckBox();
+            this.cB_Input = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupValue7 = new System.Windows.Forms.GroupBox();
+            this.radioValueH7 = new System.Windows.Forms.RadioButton();
+            this.radioValueL7 = new System.Windows.Forms.RadioButton();
+            this.groupValue3 = new System.Windows.Forms.GroupBox();
+            this.radioValueH3 = new System.Windows.Forms.RadioButton();
+            this.radioValueL3 = new System.Windows.Forms.RadioButton();
+            this.groupValue6 = new System.Windows.Forms.GroupBox();
+            this.radioValueH6 = new System.Windows.Forms.RadioButton();
+            this.radioValueL6 = new System.Windows.Forms.RadioButton();
+            this.groupValue2 = new System.Windows.Forms.GroupBox();
+            this.radioValueH2 = new System.Windows.Forms.RadioButton();
+            this.radioValueL2 = new System.Windows.Forms.RadioButton();
+            this.groupValue5 = new System.Windows.Forms.GroupBox();
+            this.radioValueH5 = new System.Windows.Forms.RadioButton();
+            this.radioValueL5 = new System.Windows.Forms.RadioButton();
+            this.groupValue1 = new System.Windows.Forms.GroupBox();
+            this.radioValueH1 = new System.Windows.Forms.RadioButton();
+            this.radioValueL1 = new System.Windows.Forms.RadioButton();
+            this.groupValue4 = new System.Windows.Forms.GroupBox();
+            this.radioValueH4 = new System.Windows.Forms.RadioButton();
+            this.radioValueL4 = new System.Windows.Forms.RadioButton();
+            this.groupValue0 = new System.Windows.Forms.GroupBox();
+            this.radioValueH0 = new System.Windows.Forms.RadioButton();
+            this.radioValueL0 = new System.Windows.Forms.RadioButton();
+            this.btn_WRITE = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label100 = new System.Windows.Forms.Label();
+            this.btnSetDAQ_DIO = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboDioPort = new System.Windows.Forms.ComboBox();
+            this.tabPageVISA = new System.Windows.Forms.TabPage();
+            this.lab_DR2003_OnOff = new System.Windows.Forms.Label();
+            this.btn_DR2003_OnOff = new System.Windows.Forms.Button();
+            this.cboGPIB = new System.Windows.Forms.ComboBox();
+            this.rbtGPIB = new System.Windows.Forms.RadioButton();
+            this.cboBaudRate = new System.Windows.Forms.ComboBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.groupBoxDisplay = new System.Windows.Forms.GroupBox();
+            this.txtDisplay = new System.Windows.Forms.TextBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblCommand = new System.Windows.Forms.Label();
+            this.cboCommand = new System.Windows.Forms.ComboBox();
+            this.btnWrite = new System.Windows.Forms.Button();
+            this.btnRead = new System.Windows.Forms.Button();
+            this.btnQuery = new System.Windows.Forms.Button();
+            this.lblOverTime = new System.Windows.Forms.Label();
+            this.nudTimeout = new System.Windows.Forms.NumericUpDown();
+            this.lblTimeout = new System.Windows.Forms.Label();
+            this.lblStopBits = new System.Windows.Forms.Label();
+            this.cboStopBits = new System.Windows.Forms.ComboBox();
+            this.lblDataBits = new System.Windows.Forms.Label();
+            this.cboDataBits = new System.Windows.Forms.ComboBox();
+            this.lblFlowControl = new System.Windows.Forms.Label();
+            this.cboFlowControl = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboParity = new System.Windows.Forms.ComboBox();
+            this.lblBaudRate = new System.Windows.Forms.Label();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.rbtRS232 = new System.Windows.Forms.RadioButton();
+            this.cboUSB = new System.Windows.Forms.ComboBox();
+            this.cboRS232 = new System.Windows.Forms.ComboBox();
+            this.rbtUSB = new System.Windows.Forms.RadioButton();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.labelPn = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textFixture = new System.Windows.Forms.TextBox();
+            this.textEmp = new System.Windows.Forms.TextBox();
+            this.textSn = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelCounter = new System.Windows.Forms.Label();
+            this.tabPageDUTGPIO = new System.Windows.Forms.TabPage();
+            this.Init_btn = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tB_enterpinN = new System.Windows.Forms.TextBox();
+            this.pullhigh_btn = new System.Windows.Forms.Button();
+            this.btn_pulllow = new System.Windows.Forms.Button();
+            this.tabControlPattern.SuspendLayout();
+            this.tabPageAll.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewTest)).BeginInit();
+            this.tabPageSetting.SuspendLayout();
+            this.tabPageButton.SuspendLayout();
+            this.groupValue7.SuspendLayout();
+            this.groupDir7.SuspendLayout();
+            this.groupValue3.SuspendLayout();
+            this.groupDir3.SuspendLayout();
+            this.groupValue6.SuspendLayout();
+            this.groupDir6.SuspendLayout();
+            this.groupValue2.SuspendLayout();
+            this.groupDir2.SuspendLayout();
+            this.groupValue5.SuspendLayout();
+            this.groupDir5.SuspendLayout();
+            this.groupValue1.SuspendLayout();
+            this.groupDir1.SuspendLayout();
+            this.groupValue4.SuspendLayout();
+            this.groupDir4.SuspendLayout();
+            this.groupValue0.SuspendLayout();
+            this.groupDir0.SuspendLayout();
+            this.tabPageVISA.SuspendLayout();
+            this.groupBoxDisplay.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).BeginInit();
+            this.tabPageDUTGPIO.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // workerTestProccess
+            // 
+            this.workerTestProccess.WorkerReportsProgress = true;
+            this.workerTestProccess.WorkerSupportsCancellation = true;
+            this.workerTestProccess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerTestProccess_DoWork);
+            this.workerTestProccess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerTestProccess_ProgressChanged);
+            this.workerTestProccess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerTestProccess_Completed);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(691, 11);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(280, 13);
+            this.progressBar1.TabIndex = 3;
+            // 
+            // combo_serial
+            // 
+            this.combo_serial.Font = new System.Drawing.Font("Arial", 18F);
+            this.combo_serial.FormattingEnabled = true;
+            this.combo_serial.Location = new System.Drawing.Point(171, 80);
+            this.combo_serial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.combo_serial.Name = "combo_serial";
+            this.combo_serial.Size = new System.Drawing.Size(144, 35);
+            this.combo_serial.TabIndex = 4;
+            this.combo_serial.SelectedIndexChanged += new System.EventHandler(this.combo_serial_SelectedIndexChanged);
+            // 
+            // tabControlPattern
+            // 
+            this.tabControlPattern.Controls.Add(this.tabPageAll);
+            this.tabControlPattern.Controls.Add(this.tabPageSetting);
+            this.tabControlPattern.Controls.Add(this.tabPageButton);
+            this.tabControlPattern.Controls.Add(this.tabPageVISA);
+            this.tabControlPattern.Controls.Add(this.tabPageDUTGPIO);
+            this.tabControlPattern.Location = new System.Drawing.Point(16, 90);
+            this.tabControlPattern.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabControlPattern.Name = "tabControlPattern";
+            this.tabControlPattern.SelectedIndex = 0;
+            this.tabControlPattern.Size = new System.Drawing.Size(1168, 590);
+            this.tabControlPattern.TabIndex = 7;
+            this.tabControlPattern.TabStop = false;
+            this.tabControlPattern.SelectedIndexChanged += new System.EventHandler(this.selectedPage);
+            // 
+            // tabPageAll
+            // 
+            this.tabPageAll.Controls.Add(this.labelSfisInfo);
+            this.tabPageAll.Controls.Add(this.panel1);
+            this.tabPageAll.Controls.Add(this.labelTestResult);
+            this.tabPageAll.Controls.Add(this.labelPoccess);
+            this.tabPageAll.Controls.Add(this.progressBar1);
+            this.tabPageAll.Controls.Add(this.gridViewTest);
+            this.tabPageAll.Location = new System.Drawing.Point(4, 27);
+            this.tabPageAll.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPageAll.Name = "tabPageAll";
+            this.tabPageAll.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPageAll.Size = new System.Drawing.Size(1160, 559);
+            this.tabPageAll.TabIndex = 2;
+            this.tabPageAll.Text = "Test Items";
+            this.tabPageAll.UseVisualStyleBackColor = true;
+            // 
+            // labelSfisInfo
+            // 
+            this.labelSfisInfo.AutoSize = true;
+            this.labelSfisInfo.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSfisInfo.Location = new System.Drawing.Point(31, 464);
+            this.labelSfisInfo.Name = "labelSfisInfo";
+            this.labelSfisInfo.Size = new System.Drawing.Size(79, 19);
+            this.labelSfisInfo.TabIndex = 0;
+            this.labelSfisInfo.Text = " SFIS Info. ";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.labelSfisResult);
+            this.panel1.Controls.Add(this.richTextSfis);
+            this.panel1.Location = new System.Drawing.Point(15, 475);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1013, 70);
+            this.panel1.TabIndex = 15;
+            // 
+            // labelSfisResult
+            // 
+            this.labelSfisResult.BackColor = System.Drawing.Color.LimeGreen;
+            this.labelSfisResult.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSfisResult.Location = new System.Drawing.Point(869, 13);
+            this.labelSfisResult.Name = "labelSfisResult";
+            this.labelSfisResult.Size = new System.Drawing.Size(127, 44);
+            this.labelSfisResult.TabIndex = 15;
+            this.labelSfisResult.Text = "N/A";
+            this.labelSfisResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSfisResult.Visible = false;
+            this.labelSfisResult.TextChanged += new System.EventHandler(this.labelResult_TextChanged);
+            // 
+            // richTextSfis
+            // 
+            this.richTextSfis.Location = new System.Drawing.Point(19, 13);
+            this.richTextSfis.Name = "richTextSfis";
+            this.richTextSfis.ReadOnly = true;
+            this.richTextSfis.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTextSfis.Size = new System.Drawing.Size(844, 44);
+            this.richTextSfis.TabIndex = 0;
+            this.richTextSfis.Text = "<<     | SSS,MMM,FFF,1,,OK\n    >> | OK";
+            // 
+            // labelTestResult
+            // 
+            this.labelTestResult.BackColor = System.Drawing.Color.LimeGreen;
+            this.labelTestResult.Font = new System.Drawing.Font("Calibri", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTestResult.Location = new System.Drawing.Point(1035, 33);
+            this.labelTestResult.Name = "labelTestResult";
+            this.labelTestResult.Size = new System.Drawing.Size(107, 76);
+            this.labelTestResult.TabIndex = 14;
+            this.labelTestResult.Text = "N/A";
+            this.labelTestResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelTestResult.Visible = false;
+            this.labelTestResult.TextChanged += new System.EventHandler(this.labelResult_TextChanged);
+            // 
+            // labelPoccess
+            // 
+            this.labelPoccess.AutoSize = true;
+            this.labelPoccess.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPoccess.Location = new System.Drawing.Point(978, 9);
+            this.labelPoccess.Name = "labelPoccess";
+            this.labelPoccess.Size = new System.Drawing.Size(50, 19);
+            this.labelPoccess.TabIndex = 4;
+            this.labelPoccess.Text = "label5";
+            // 
+            // gridViewTest
+            // 
+            this.gridViewTest.AllowUserToAddRows = false;
+            this.gridViewTest.AllowUserToDeleteRows = false;
+            this.gridViewTest.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridViewTest.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.gridViewTest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridViewTest.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnStep,
+            this.ColumnTest,
+            this.ColumnMeasured,
+            this.ColumnLL,
+            this.ColumnUL,
+            this.ColumnErrorCode,
+            this.ColumnStatus});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridViewTest.DefaultCellStyle = dataGridViewCellStyle1;
+            this.gridViewTest.Location = new System.Drawing.Point(15, 33);
+            this.gridViewTest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gridViewTest.Name = "gridViewTest";
+            this.gridViewTest.ReadOnly = true;
+            this.gridViewTest.RowHeadersWidth = 24;
+            this.gridViewTest.RowTemplate.Height = 24;
+            this.gridViewTest.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.gridViewTest.Size = new System.Drawing.Size(1013, 426);
+            this.gridViewTest.TabIndex = 0;
+            this.gridViewTest.TabStop = false;
+            this.gridViewTest.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridViewTest_CellPainting);
+            // 
+            // ColumnStep
+            // 
+            this.ColumnStep.HeaderText = "Step";
+            this.ColumnStep.Name = "ColumnStep";
+            this.ColumnStep.ReadOnly = true;
+            this.ColumnStep.Width = 80;
+            // 
+            // ColumnTest
+            // 
+            this.ColumnTest.HeaderText = "Test";
+            this.ColumnTest.Name = "ColumnTest";
+            this.ColumnTest.ReadOnly = true;
+            this.ColumnTest.Width = 330;
+            // 
+            // ColumnMeasured
+            // 
+            this.ColumnMeasured.HeaderText = "Measured";
+            this.ColumnMeasured.Name = "ColumnMeasured";
+            this.ColumnMeasured.ReadOnly = true;
+            this.ColumnMeasured.Width = 140;
+            // 
+            // ColumnLL
+            // 
+            this.ColumnLL.HeaderText = "Lower Limit";
+            this.ColumnLL.Name = "ColumnLL";
+            this.ColumnLL.ReadOnly = true;
+            this.ColumnLL.Width = 120;
+            // 
+            // ColumnUL
+            // 
+            this.ColumnUL.HeaderText = "Upper Limit";
+            this.ColumnUL.Name = "ColumnUL";
+            this.ColumnUL.ReadOnly = true;
+            this.ColumnUL.Width = 120;
+            // 
+            // ColumnErrorCode
+            // 
+            this.ColumnErrorCode.HeaderText = "Error Code";
+            this.ColumnErrorCode.Name = "ColumnErrorCode";
+            this.ColumnErrorCode.ReadOnly = true;
+            // 
+            // ColumnStatus
+            // 
+            this.ColumnStatus.HeaderText = "Status";
+            this.ColumnStatus.Name = "ColumnStatus";
+            this.ColumnStatus.ReadOnly = true;
+            this.ColumnStatus.Width = 80;
+            // 
+            // tabPageSetting
+            // 
+            this.tabPageSetting.Controls.Add(this.labelAtmelPath);
+            this.tabPageSetting.Controls.Add(this.btnAtmelPath);
+            this.tabPageSetting.Controls.Add(this.label11);
+            this.tabPageSetting.Controls.Add(this.btnReset);
+            this.tabPageSetting.Controls.Add(this.labelSerial);
+            this.tabPageSetting.Controls.Add(this.label7);
+            this.tabPageSetting.Controls.Add(this.btnBarcode);
+            this.tabPageSetting.Controls.Add(this.label6);
+            this.tabPageSetting.Controls.Add(this.combo_serial);
+            this.tabPageSetting.Location = new System.Drawing.Point(4, 27);
+            this.tabPageSetting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPageSetting.Name = "tabPageSetting";
+            this.tabPageSetting.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPageSetting.Size = new System.Drawing.Size(1160, 559);
+            this.tabPageSetting.TabIndex = 0;
+            this.tabPageSetting.Text = "Setting";
+            this.tabPageSetting.UseVisualStyleBackColor = true;
+            // 
+            // labelAtmelPath
+            // 
+            this.labelAtmelPath.AutoSize = true;
+            this.labelAtmelPath.Font = new System.Drawing.Font("Arial", 18F);
+            this.labelAtmelPath.Location = new System.Drawing.Point(305, 150);
+            this.labelAtmelPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelAtmelPath.Name = "labelAtmelPath";
+            this.labelAtmelPath.Size = new System.Drawing.Size(55, 27);
+            this.labelAtmelPath.TabIndex = 16;
+            this.labelAtmelPath.Text = "Null";
+            // 
+            // btnAtmelPath
+            // 
+            this.btnAtmelPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.btnAtmelPath.Location = new System.Drawing.Point(969, 138);
+            this.btnAtmelPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnAtmelPath.Name = "btnAtmelPath";
+            this.btnAtmelPath.Size = new System.Drawing.Size(180, 64);
+            this.btnAtmelPath.TabIndex = 15;
+            this.btnAtmelPath.Text = "Browse";
+            this.btnAtmelPath.UseVisualStyleBackColor = true;
+            this.btnAtmelPath.Click += new System.EventHandler(this.btnAtmelPath_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Arial", 28F);
+            this.label11.Location = new System.Drawing.Point(8, 138);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(217, 43);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Atmel Path:";
+            // 
+            // btnReset
+            // 
+            this.btnReset.Font = new System.Drawing.Font("Arial", 20F);
+            this.btnReset.Location = new System.Drawing.Point(11, 278);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(1139, 77);
+            this.btnReset.TabIndex = 10;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // labelSerial
+            // 
+            this.labelSerial.AutoSize = true;
+            this.labelSerial.Font = new System.Drawing.Font("Arial", 18F);
+            this.labelSerial.Location = new System.Drawing.Point(377, 26);
+            this.labelSerial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelSerial.Name = "labelSerial";
+            this.labelSerial.Size = new System.Drawing.Size(55, 27);
+            this.labelSerial.TabIndex = 9;
+            this.labelSerial.Text = "Null";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Arial", 28F);
+            this.label7.Location = new System.Drawing.Point(8, 9);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(262, 43);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "SerialNumber:";
+            // 
+            // btnBarcode
+            // 
+            this.btnBarcode.Font = new System.Drawing.Font("Arial", 16F);
+            this.btnBarcode.Location = new System.Drawing.Point(969, 9);
+            this.btnBarcode.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnBarcode.Name = "btnBarcode";
+            this.btnBarcode.Size = new System.Drawing.Size(180, 64);
+            this.btnBarcode.TabIndex = 7;
+            this.btnBarcode.Text = "Barcode";
+            this.btnBarcode.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Arial", 28F);
+            this.label6.Location = new System.Drawing.Point(5, 74);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(118, 43);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "COM:";
+            // 
+            // tabPageButton
+            // 
+            this.tabPageButton.Controls.Add(this.btn_READ);
+            this.tabPageButton.Controls.Add(this.label2);
+            this.tabPageButton.Controls.Add(this.cBox_portN);
+            this.tabPageButton.Controls.Add(this.cB_Output);
+            this.tabPageButton.Controls.Add(this.cB_Input);
+            this.tabPageButton.Controls.Add(this.label8);
+            this.tabPageButton.Controls.Add(this.groupValue7);
+            this.tabPageButton.Controls.Add(this.groupValue3);
+            this.tabPageButton.Controls.Add(this.groupValue6);
+            this.tabPageButton.Controls.Add(this.groupValue2);
+            this.tabPageButton.Controls.Add(this.groupValue5);
+            this.tabPageButton.Controls.Add(this.groupValue1);
+            this.tabPageButton.Controls.Add(this.groupValue4);
+            this.tabPageButton.Controls.Add(this.groupValue0);
+            this.tabPageButton.Controls.Add(this.btn_WRITE);
+            this.tabPageButton.Controls.Add(this.label13);
+            this.tabPageButton.Controls.Add(this.label100);
+            this.tabPageButton.Controls.Add(this.comboDioPort);
+            this.tabPageButton.Location = new System.Drawing.Point(4, 22);
+            this.tabPageButton.Name = "tabPageButton";
+            this.tabPageButton.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageButton.Size = new System.Drawing.Size(868, 564);
+            this.tabPageButton.TabIndex = 1;
+            this.tabPageButton.Text = "s";
+            this.tabPageButton.UseVisualStyleBackColor = true;
+            // 
+            // btn_READ
+            // 
+            this.btn_READ.Enabled = false;
+            this.btn_READ.Location = new System.Drawing.Point(344, 99);
+            this.btn_READ.Name = "btn_READ";
+            this.btn_READ.Size = new System.Drawing.Size(60, 45);
+            this.btn_READ.TabIndex = 72;
+            this.btn_READ.Text = "READ";
+            this.btn_READ.UseVisualStyleBackColor = true;
+            this.btn_READ.Click += new System.EventHandler(this.btn_READ_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(132, 115);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 12);
+            this.label2.TabIndex = 71;
+            // 
+            // cBox_portN
+            // 
+            this.cBox_portN.FormattingEnabled = true;
+            this.cBox_portN.Location = new System.Drawing.Point(6, 137);
+            this.cBox_portN.Name = "cBox_portN";
+            this.cBox_portN.Size = new System.Drawing.Size(94, 20);
+            this.cBox_portN.TabIndex = 69;
+            this.cBox_portN.SelectedIndexChanged += new System.EventHandler(this.selectlineN);
+            // 
+            // cB_Output
+            // 
+            this.cB_Output.AutoSize = true;
+            this.cB_Output.Checked = true;
+            this.cB_Output.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cB_Output.Location = new System.Drawing.Point(104, 40);
+            this.cB_Output.Name = "cB_Output";
+            this.cB_Output.Size = new System.Drawing.Size(56, 16);
+            this.cB_Output.TabIndex = 68;
+            this.cB_Output.Text = "Output";
+            this.cB_Output.UseVisualStyleBackColor = true;
+            this.cB_Output.CheckedChanged += new System.EventHandler(this.CBoutput_Check_Click);
+            // 
+            // cB_Input
+            // 
+            this.cB_Input.AutoSize = true;
+            this.cB_Input.Location = new System.Drawing.Point(104, 18);
+            this.cB_Input.Name = "cB_Input";
+            this.cB_Input.Size = new System.Drawing.Size(49, 16);
+            this.cB_Input.TabIndex = 67;
+            this.cB_Input.Text = "Input";
+            this.cB_Input.UseVisualStyleBackColor = true;
+            this.cB_Input.CheckedChanged += new System.EventHandler(this.CBinput_Check_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(107, 115);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(188, 12);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "P.0   P.1   P.2   P.3   P.4   P.5   P.6   P.7";
+            // 
+            // groupValue7
+            // 
+            this.groupValue7.Controls.Add(this.radioValueH7);
+            this.groupValue7.Controls.Add(this.radioValueL7);
+            this.groupValue7.Location = new System.Drawing.Point(359, 123);
+            this.groupValue7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupValue7.Name = "groupValue7";
+            this.groupValue7.Size = new System.Drawing.Size(22, 53);
+            this.groupValue7.TabIndex = 66;
+            this.groupValue7.TabStop = false;
+            // 
+            // radioValueH7
+            // 
+            this.radioValueH7.AutoSize = true;
+            this.radioValueH7.Enabled = false;
+            this.radioValueH7.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH7.Name = "radioValueH7";
+            this.radioValueH7.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH7.TabIndex = 30;
+            this.radioValueH7.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL7
+            // 
+            this.radioValueL7.AutoSize = true;
+            this.radioValueL7.Enabled = false;
+            this.radioValueL7.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL7.Name = "radioValueL7";
+            this.radioValueL7.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL7.TabIndex = 37;
+            this.radioValueL7.UseVisualStyleBackColor = true;
+            // 
+            // groupValue3
+            // 
+            this.groupValue3.Controls.Add(this.radioValueH3);
+            this.groupValue3.Controls.Add(this.radioValueL3);
+            this.groupValue3.Location = new System.Drawing.Point(175, 126);
+            this.groupValue3.Name = "groupValue3";
+            this.groupValue3.Size = new System.Drawing.Size(22, 53);
+            this.groupValue3.TabIndex = 62;
+            this.groupValue3.TabStop = false;
+            // 
+            // radioValueH3
+            // 
+            this.radioValueH3.AutoSize = true;
+            this.radioValueH3.Enabled = false;
+            this.radioValueH3.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH3.Name = "radioValueH3";
+            this.radioValueH3.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH3.TabIndex = 30;
+            this.radioValueH3.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL3
+            // 
+            this.radioValueL3.AutoSize = true;
+            this.radioValueL3.Enabled = false;
+            this.radioValueL3.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL3.Name = "radioValueL3";
+            this.radioValueL3.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL3.TabIndex = 37;
+            this.radioValueL3.UseVisualStyleBackColor = true;
+            // 
+            // groupValue6
+            // 
+            this.groupValue6.Controls.Add(this.radioValueH6);
+            this.groupValue6.Controls.Add(this.radioValueL6);
+            this.groupValue6.Location = new System.Drawing.Point(246, 126);
+            this.groupValue6.Name = "groupValue6";
+            this.groupValue6.Size = new System.Drawing.Size(22, 53);
+            this.groupValue6.TabIndex = 65;
+            this.groupValue6.TabStop = false;
+            // 
+            // radioValueH6
+            // 
+            this.radioValueH6.AutoSize = true;
+            this.radioValueH6.Enabled = false;
+            this.radioValueH6.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH6.Name = "radioValueH6";
+            this.radioValueH6.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH6.TabIndex = 30;
+            this.radioValueH6.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL6
+            // 
+            this.radioValueL6.AutoSize = true;
+            this.radioValueL6.Enabled = false;
+            this.radioValueL6.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL6.Name = "radioValueL6";
+            this.radioValueL6.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL6.TabIndex = 37;
+            this.radioValueL6.UseVisualStyleBackColor = true;
+            // 
+            // groupValue2
+            // 
+            this.groupValue2.Controls.Add(this.radioValueH2);
+            this.groupValue2.Controls.Add(this.radioValueL2);
+            this.groupValue2.Location = new System.Drawing.Point(152, 126);
+            this.groupValue2.Name = "groupValue2";
+            this.groupValue2.Size = new System.Drawing.Size(22, 53);
+            this.groupValue2.TabIndex = 61;
+            this.groupValue2.TabStop = false;
+            // 
+            // radioValueH2
+            // 
+            this.radioValueH2.AutoSize = true;
+            this.radioValueH2.Enabled = false;
+            this.radioValueH2.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH2.Name = "radioValueH2";
+            this.radioValueH2.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH2.TabIndex = 30;
+            this.radioValueH2.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL2
+            // 
+            this.radioValueL2.AutoSize = true;
+            this.radioValueL2.Enabled = false;
+            this.radioValueL2.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL2.Name = "radioValueL2";
+            this.radioValueL2.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL2.TabIndex = 37;
+            this.radioValueL2.UseVisualStyleBackColor = true;
+            // 
+            // groupValue5
+            // 
+            this.groupValue5.Controls.Add(this.radioValueH5);
+            this.groupValue5.Controls.Add(this.radioValueL5);
+            this.groupValue5.Location = new System.Drawing.Point(223, 126);
+            this.groupValue5.Name = "groupValue5";
+            this.groupValue5.Size = new System.Drawing.Size(22, 53);
+            this.groupValue5.TabIndex = 64;
+            this.groupValue5.TabStop = false;
+            // 
+            // radioValueH5
+            // 
+            this.radioValueH5.AutoSize = true;
+            this.radioValueH5.Enabled = false;
+            this.radioValueH5.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH5.Name = "radioValueH5";
+            this.radioValueH5.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH5.TabIndex = 30;
+            this.radioValueH5.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL5
+            // 
+            this.radioValueL5.AutoSize = true;
+            this.radioValueL5.Enabled = false;
+            this.radioValueL5.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL5.Name = "radioValueL5";
+            this.radioValueL5.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL5.TabIndex = 37;
+            this.radioValueL5.UseVisualStyleBackColor = true;
+            // 
+            // groupValue1
+            // 
+            this.groupValue1.Controls.Add(this.radioValueH1);
+            this.groupValue1.Controls.Add(this.radioValueL1);
+            this.groupValue1.Location = new System.Drawing.Point(129, 126);
+            this.groupValue1.Name = "groupValue1";
+            this.groupValue1.Size = new System.Drawing.Size(22, 53);
+            this.groupValue1.TabIndex = 60;
+            this.groupValue1.TabStop = false;
+            // 
+            // radioValueH1
+            // 
+            this.radioValueH1.AutoSize = true;
+            this.radioValueH1.Enabled = false;
+            this.radioValueH1.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH1.Name = "radioValueH1";
+            this.radioValueH1.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH1.TabIndex = 30;
+            this.radioValueH1.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL1
+            // 
+            this.radioValueL1.AutoSize = true;
+            this.radioValueL1.Enabled = false;
+            this.radioValueL1.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL1.Name = "radioValueL1";
+            this.radioValueL1.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL1.TabIndex = 37;
+            this.radioValueL1.UseVisualStyleBackColor = true;
+            // 
+            // groupValue4
+            // 
+            this.groupValue4.Controls.Add(this.radioValueH4);
+            this.groupValue4.Controls.Add(this.radioValueL4);
+            this.groupValue4.Location = new System.Drawing.Point(200, 126);
+            this.groupValue4.Name = "groupValue4";
+            this.groupValue4.Size = new System.Drawing.Size(22, 53);
+            this.groupValue4.TabIndex = 63;
+            this.groupValue4.TabStop = false;
+            // 
+            // radioValueH4
+            // 
+            this.radioValueH4.AutoSize = true;
+            this.radioValueH4.Enabled = false;
+            this.radioValueH4.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH4.Name = "radioValueH4";
+            this.radioValueH4.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH4.TabIndex = 30;
+            this.radioValueH4.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL4
+            // 
+            this.radioValueL4.AutoSize = true;
+            this.radioValueL4.Enabled = false;
+            this.radioValueL4.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL4.Name = "radioValueL4";
+            this.radioValueL4.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL4.TabIndex = 37;
+            this.radioValueL4.UseVisualStyleBackColor = true;
+            // 
+            // groupValue0
+            // 
+            this.groupValue0.Controls.Add(this.radioValueH0);
+            this.groupValue0.Controls.Add(this.radioValueL0);
+            this.groupValue0.Location = new System.Drawing.Point(106, 126);
+            this.groupValue0.Name = "groupValue0";
+            this.groupValue0.Size = new System.Drawing.Size(22, 53);
+            this.groupValue0.TabIndex = 59;
+            this.groupValue0.TabStop = false;
+            // 
+            // radioValueH0
+            // 
+            this.radioValueH0.AutoSize = true;
+            this.radioValueH0.Enabled = false;
+            this.radioValueH0.Location = new System.Drawing.Point(6, 10);
+            this.radioValueH0.Name = "radioValueH0";
+            this.radioValueH0.Size = new System.Drawing.Size(14, 13);
+            this.radioValueH0.TabIndex = 30;
+            this.radioValueH0.UseVisualStyleBackColor = true;
+            // 
+            // radioValueL0
+            // 
+            this.radioValueL0.AutoSize = true;
+            this.radioValueL0.Enabled = false;
+            this.radioValueL0.Location = new System.Drawing.Point(6, 29);
+            this.radioValueL0.Name = "radioValueL0";
+            this.radioValueL0.Size = new System.Drawing.Size(14, 13);
+            this.radioValueL0.TabIndex = 37;
+            this.radioValueL0.UseVisualStyleBackColor = true;
+            // 
+            // btn_WRITE
+            // 
+            this.btn_WRITE.Location = new System.Drawing.Point(344, 167);
+            this.btn_WRITE.Name = "btn_WRITE";
+            this.btn_WRITE.Size = new System.Drawing.Size(60, 42);
+            this.btn_WRITE.TabIndex = 46;
+            this.btn_WRITE.Text = "WRITE";
+            this.btn_WRITE.UseVisualStyleBackColor = true;
+            this.btn_WRITE.Click += new System.EventHandler(this.btn_Write_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(395, 170);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(33, 18);
+            this.label13.TabIndex = 45;
+            this.label13.Text = "Low";
+            // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.Location = new System.Drawing.Point(395, 139);
+            this.label100.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(36, 18);
+            this.label100.TabIndex = 44;
+            this.label100.Text = "High";
+            // 
+            // btnSetDAQ_DIO
+            // 
+            this.btnSetDAQ_DIO.Location = new System.Drawing.Point(459, 49);
+            this.btnSetDAQ_DIO.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSetDAQ_DIO.Name = "btnSetDAQ_DIO";
+            this.btnSetDAQ_DIO.Size = new System.Drawing.Size(80, 64);
+            this.btnSetDAQ_DIO.TabIndex = 29;
+            this.btnSetDAQ_DIO.Text = "Set";
+            this.btnSetDAQ_DIO.UseVisualStyleBackColor = true;
+            this.btnSetDAQ_DIO.Click += new System.EventHandler(this.btnSetDAQ_DIO_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(395, 81);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 18);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "Output";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(395, 49);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 18);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "Input";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(359, 12);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 18);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Px.7";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(136, 12);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 18);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Px.0";
+            // 
+            // comboDioPort
+            // 
+            this.comboDioPort.FormattingEnabled = true;
+            this.comboDioPort.Location = new System.Drawing.Point(7, 49);
+            this.comboDioPort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboDioPort.Name = "comboDioPort";
+            this.comboDioPort.Size = new System.Drawing.Size(92, 26);
+            this.comboDioPort.TabIndex = 10;
+            // 
+            // tabPageAll
+            // 
+            this.tabPageAll.Controls.Add(this.labelPoccess);
+            this.tabPageAll.Controls.Add(this.btnStart);
+            this.tabPageAll.Controls.Add(this.progressBar1);
+            this.tabPageAll.Controls.Add(this.gridViewTest);
+            this.tabPageAll.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAll.Name = "tabPageAll";
+            this.tabPageAll.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAll.Size = new System.Drawing.Size(868, 564);
+            this.tabPageAll.TabIndex = 2;
+            this.tabPageAll.Text = "All";
+            this.tabPageAll.UseVisualStyleBackColor = true;
+            // 
+            // labelPoccess
+            // 
+            this.tabPageVISA.Controls.Add(this.lab_DR2003_OnOff);
+            this.tabPageVISA.Controls.Add(this.btn_DR2003_OnOff);
+            this.tabPageVISA.Controls.Add(this.cboGPIB);
+            this.tabPageVISA.Controls.Add(this.rbtGPIB);
+            this.tabPageVISA.Controls.Add(this.cboBaudRate);
+            this.tabPageVISA.Controls.Add(this.btnRefresh);
+            this.tabPageVISA.Controls.Add(this.groupBoxDisplay);
+            this.tabPageVISA.Controls.Add(this.flowLayoutPanel3);
+            this.tabPageVISA.Controls.Add(this.lblStopBits);
+            this.tabPageVISA.Controls.Add(this.cboStopBits);
+            this.tabPageVISA.Controls.Add(this.lblDataBits);
+            this.tabPageVISA.Controls.Add(this.cboDataBits);
+            this.tabPageVISA.Controls.Add(this.lblFlowControl);
+            this.tabPageVISA.Controls.Add(this.cboFlowControl);
+            this.tabPageVISA.Controls.Add(this.label1);
+            this.tabPageVISA.Controls.Add(this.cboParity);
+            this.tabPageVISA.Controls.Add(this.lblBaudRate);
+            this.tabPageVISA.Controls.Add(this.btnOpen);
+            this.tabPageVISA.Controls.Add(this.rbtRS232);
+            this.tabPageVISA.Controls.Add(this.cboUSB);
+            this.tabPageVISA.Controls.Add(this.cboRS232);
+            this.tabPageVISA.Controls.Add(this.rbtUSB);
+            this.tabPageVISA.Location = new System.Drawing.Point(4, 27);
+            this.tabPageVISA.Name = "tabPageVISA";
+            this.tabPageVISA.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageVISA.Size = new System.Drawing.Size(1160, 559);
+            this.tabPageVISA.TabIndex = 3;
+            this.tabPageVISA.Text = "VISA Instrument";
+            this.tabPageVISA.UseVisualStyleBackColor = true;
+            // 
+            // lab_DR2003_OnOff
+            // 
+            this.lab_DR2003_OnOff.AutoSize = true;
+            this.lab_DR2003_OnOff.Location = new System.Drawing.Point(957, 127);
+            this.lab_DR2003_OnOff.Name = "lab_DR2003_OnOff";
+            this.lab_DR2003_OnOff.Size = new System.Drawing.Size(167, 18);
+            this.lab_DR2003_OnOff.TabIndex = 50;
+            this.lab_DR2003_OnOff.Text = "DR2003 Power On Off Test";
+            // 
+            // btn_DR2003_OnOff
+            // 
+            this.btn_DR2003_OnOff.Location = new System.Drawing.Point(960, 148);
+            this.btn_DR2003_OnOff.Name = "btn_DR2003_OnOff";
+            this.btn_DR2003_OnOff.Size = new System.Drawing.Size(99, 25);
+            this.btn_DR2003_OnOff.TabIndex = 49;
+            this.btn_DR2003_OnOff.Text = "On";
+            this.btn_DR2003_OnOff.UseVisualStyleBackColor = true;
+            this.btn_DR2003_OnOff.Click += new System.EventHandler(this.btn_DR2003_OnOff_Click);
+            // 
+            // cboGPIB
+            // 
+            this.cboGPIB.FormattingEnabled = true;
+            this.cboGPIB.Location = new System.Drawing.Point(86, 82);
+            this.cboGPIB.Name = "cboGPIB";
+            this.cboGPIB.Size = new System.Drawing.Size(426, 26);
+            this.cboGPIB.TabIndex = 48;
+            // 
+            // rbtGPIB
+            // 
+            this.rbtGPIB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.rbtGPIB.AutoSize = true;
+            this.rbtGPIB.Location = new System.Drawing.Point(25, 83);
+            this.rbtGPIB.Name = "rbtGPIB";
+            this.rbtGPIB.Size = new System.Drawing.Size(58, 22);
+            this.rbtGPIB.TabIndex = 47;
+            this.rbtGPIB.Text = "GPIB ";
+            this.rbtGPIB.UseVisualStyleBackColor = true;
+            // 
+            // cboBaudRate
+            // 
+            this.cboBaudRate.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboBaudRate.FormattingEnabled = true;
+            this.cboBaudRate.Location = new System.Drawing.Point(305, 4);
+            this.cboBaudRate.Margin = new System.Windows.Forms.Padding(3, 3, 17, 3);
+            this.cboBaudRate.Name = "cboBaudRate";
+            this.cboBaudRate.Size = new System.Drawing.Size(73, 26);
+            this.cboBaudRate.TabIndex = 46;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(26, 117);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(70, 23);
+            this.btnRefresh.TabIndex = 45;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // groupBoxDisplay
+            // 
+            this.groupBoxDisplay.Controls.Add(this.txtDisplay);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(11, 186);
+            this.groupBoxDisplay.Name = "groupBoxDisplay";
+            this.groupBoxDisplay.Size = new System.Drawing.Size(833, 334);
+            this.groupBoxDisplay.TabIndex = 44;
+            this.groupBoxDisplay.TabStop = false;
+            this.groupBoxDisplay.Text = "顯示";
+            // 
+            // txtDisplay
+            // 
+            this.txtDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDisplay.Location = new System.Drawing.Point(3, 22);
+            this.txtDisplay.Multiline = true;
+            this.txtDisplay.Name = "txtDisplay";
+            this.txtDisplay.ReadOnly = true;
+            this.txtDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtDisplay.Size = new System.Drawing.Size(827, 309);
+            this.txtDisplay.TabIndex = 1;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.lblCommand);
+            this.flowLayoutPanel3.Controls.Add(this.cboCommand);
+            this.flowLayoutPanel3.Controls.Add(this.btnWrite);
+            this.flowLayoutPanel3.Controls.Add(this.btnRead);
+            this.flowLayoutPanel3.Controls.Add(this.btnQuery);
+            this.flowLayoutPanel3.Controls.Add(this.lblOverTime);
+            this.flowLayoutPanel3.Controls.Add(this.nudTimeout);
+            this.flowLayoutPanel3.Controls.Add(this.lblTimeout);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(9, 148);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(742, 37);
+            this.flowLayoutPanel3.TabIndex = 43;
+            // 
+            // lblCommand
+            // 
+            this.lblCommand.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblCommand.AutoSize = true;
+            this.lblCommand.Location = new System.Drawing.Point(15, 9);
+            this.lblCommand.Margin = new System.Windows.Forms.Padding(15, 0, 3, 0);
+            this.lblCommand.Name = "lblCommand";
+            this.lblCommand.Size = new System.Drawing.Size(71, 18);
+            this.lblCommand.TabIndex = 0;
+            this.lblCommand.Text = "Command";
+            // 
+            // cboCommand
+            // 
+            this.cboCommand.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboCommand.FormattingEnabled = true;
+            this.cboCommand.Location = new System.Drawing.Point(92, 8);
+            this.cboCommand.Name = "cboCommand";
+            this.cboCommand.Size = new System.Drawing.Size(277, 26);
+            this.cboCommand.TabIndex = 1;
+            // 
+            // btnWrite
+            // 
+            this.btnWrite.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnWrite.Location = new System.Drawing.Point(375, 3);
+            this.btnWrite.Name = "btnWrite";
+            this.btnWrite.Size = new System.Drawing.Size(53, 30);
+            this.btnWrite.TabIndex = 2;
+            this.btnWrite.Text = "Write";
+            this.btnWrite.UseVisualStyleBackColor = true;
+            this.btnWrite.Click += new System.EventHandler(this.btnWrite_Click);
+            // 
+            // btnRead
+            // 
+            this.btnRead.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnRead.Location = new System.Drawing.Point(434, 3);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(53, 30);
+            this.btnRead.TabIndex = 3;
+            this.btnRead.Text = "Read";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+            // 
+            // btnQuery
+            // 
+            this.btnQuery.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnQuery.Location = new System.Drawing.Point(493, 4);
+            this.btnQuery.Name = "btnQuery";
+            this.btnQuery.Size = new System.Drawing.Size(59, 28);
+            this.btnQuery.TabIndex = 4;
+            this.btnQuery.Text = "Query";
+            this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
+            // 
+            // lblOverTime
+            // 
+            this.lblOverTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblOverTime.AutoSize = true;
+            this.lblOverTime.Location = new System.Drawing.Point(585, 9);
+            this.lblOverTime.Margin = new System.Windows.Forms.Padding(30, 0, 3, 0);
+            this.lblOverTime.Name = "lblOverTime";
+            this.lblOverTime.Size = new System.Drawing.Size(60, 18);
+            this.lblOverTime.TabIndex = 5;
+            this.lblOverTime.Text = "Timeout";
+            // 
+            // nudTimeout
+            // 
+            this.nudTimeout.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nudTimeout.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.nudTimeout.Location = new System.Drawing.Point(651, 5);
+            this.nudTimeout.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nudTimeout.Name = "nudTimeout";
+            this.nudTimeout.Size = new System.Drawing.Size(75, 26);
+            this.nudTimeout.TabIndex = 6;
+            this.nudTimeout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nudTimeout.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            // 
+            // lblTimeout
+            // 
+            this.lblTimeout.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblTimeout.AutoSize = true;
+            this.lblTimeout.Location = new System.Drawing.Point(3, 36);
+            this.lblTimeout.Name = "lblTimeout";
+            this.lblTimeout.Size = new System.Drawing.Size(26, 18);
+            this.lblTimeout.TabIndex = 7;
+            this.lblTimeout.Text = "ms";
+            // 
+            // lblStopBits
+            // 
+            this.lblStopBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblStopBits.AutoSize = true;
+            this.lblStopBits.Font = new System.Drawing.Font("新細明體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStopBits.Location = new System.Drawing.Point(572, 8);
+            this.lblStopBits.Name = "lblStopBits";
+            this.lblStopBits.Size = new System.Drawing.Size(56, 15);
+            this.lblStopBits.TabIndex = 41;
+            this.lblStopBits.Text = "停止位:";
+            // 
+            // cboStopBits
+            // 
+            this.cboStopBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStopBits.FormattingEnabled = true;
+            this.cboStopBits.Location = new System.Drawing.Point(634, 3);
+            this.cboStopBits.Margin = new System.Windows.Forms.Padding(3, 3, 17, 3);
+            this.cboStopBits.Name = "cboStopBits";
+            this.cboStopBits.Size = new System.Drawing.Size(77, 26);
+            this.cboStopBits.TabIndex = 42;
+            // 
+            // lblDataBits
+            // 
+            this.lblDataBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblDataBits.AutoSize = true;
+            this.lblDataBits.Font = new System.Drawing.Font("新細明體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDataBits.Location = new System.Drawing.Point(731, 5);
+            this.lblDataBits.Name = "lblDataBits";
+            this.lblDataBits.Size = new System.Drawing.Size(56, 15);
+            this.lblDataBits.TabIndex = 37;
+            this.lblDataBits.Text = "數據位:";
+            // 
+            // cboDataBits
+            // 
+            this.cboDataBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboDataBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDataBits.FormattingEnabled = true;
+            this.cboDataBits.Location = new System.Drawing.Point(793, 3);
+            this.cboDataBits.Margin = new System.Windows.Forms.Padding(3, 3, 17, 3);
+            this.cboDataBits.Name = "cboDataBits";
+            this.cboDataBits.Size = new System.Drawing.Size(73, 26);
+            this.cboDataBits.TabIndex = 39;
+            // 
+            // lblFlowControl
+            // 
+            this.lblFlowControl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblFlowControl.AutoSize = true;
+            this.lblFlowControl.Font = new System.Drawing.Font("新細明體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFlowControl.Location = new System.Drawing.Point(886, 5);
+            this.lblFlowControl.Name = "lblFlowControl";
+            this.lblFlowControl.Size = new System.Drawing.Size(56, 15);
+            this.lblFlowControl.TabIndex = 38;
+            this.lblFlowControl.Text = "控制流:";
+            // 
+            // cboFlowControl
+            // 
+            this.cboFlowControl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboFlowControl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFlowControl.FormattingEnabled = true;
+            this.cboFlowControl.Location = new System.Drawing.Point(948, 1);
+            this.cboFlowControl.Name = "cboFlowControl";
+            this.cboFlowControl.Size = new System.Drawing.Size(73, 26);
+            this.cboFlowControl.TabIndex = 40;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("新細明體", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(387, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 15);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "奇偶校驗位:";
+            // 
+            // cboParity
+            // 
+            this.cboParity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cboParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboParity.FormattingEnabled = true;
+            this.cboParity.Location = new System.Drawing.Point(479, 3);
+            this.cboParity.Margin = new System.Windows.Forms.Padding(3, 3, 17, 3);
+            this.cboParity.Name = "cboParity";
+            this.cboParity.Size = new System.Drawing.Size(73, 26);
+            this.cboParity.TabIndex = 35;
+            // 
+            // lblBaudRate
+            // 
+            this.lblBaudRate.AutoSize = true;
+            this.lblBaudRate.Location = new System.Drawing.Point(230, 7);
+            this.lblBaudRate.Name = "lblBaudRate";
+            this.lblBaudRate.Size = new System.Drawing.Size(74, 18);
+            this.lblBaudRate.TabIndex = 34;
+            this.lblBaudRate.Text = "Baud Rate:";
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.Location = new System.Drawing.Point(125, 115);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(99, 25);
+            this.btnOpen.TabIndex = 33;
+            this.btnOpen.Text = "Connect";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // rbtRS232
+            // 
+            this.rbtRS232.AutoSize = true;
+            this.rbtRS232.Checked = true;
+            this.rbtRS232.Location = new System.Drawing.Point(25, 5);
+            this.rbtRS232.Name = "rbtRS232";
+            this.rbtRS232.Size = new System.Drawing.Size(62, 22);
+            this.rbtRS232.TabIndex = 29;
+            this.rbtRS232.TabStop = true;
+            this.rbtRS232.Text = "RS232";
+            this.rbtRS232.UseVisualStyleBackColor = true;
+            // 
+            // cboUSB
+            // 
+            this.cboUSB.FormattingEnabled = true;
+            this.cboUSB.Location = new System.Drawing.Point(86, 41);
+            this.cboUSB.Name = "cboUSB";
+            this.cboUSB.Size = new System.Drawing.Size(426, 26);
+            this.cboUSB.TabIndex = 32;
+            // 
+            // cboRS232
+            // 
+            this.cboRS232.FormattingEnabled = true;
+            this.cboRS232.Location = new System.Drawing.Point(86, 0);
+            this.cboRS232.Name = "cboRS232";
+            this.cboRS232.Size = new System.Drawing.Size(121, 26);
+            this.cboRS232.TabIndex = 31;
+            // 
+            // rbtUSB
+            // 
+            this.rbtUSB.AutoSize = true;
+            this.rbtUSB.Location = new System.Drawing.Point(25, 45);
+            this.rbtUSB.Name = "rbtUSB";
+            this.rbtUSB.Size = new System.Drawing.Size(50, 22);
+            this.rbtUSB.TabIndex = 30;
+            this.rbtUSB.Text = "USB";
+            this.rbtUSB.UseVisualStyleBackColor = true;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStart.Location = new System.Drawing.Point(1045, 14);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(139, 91);
+            this.btnStart.TabIndex = 4;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // labelPn
+            // 
+            this.labelPn.Font = new System.Drawing.Font("Calibri", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPn.Location = new System.Drawing.Point(739, 14);
+            this.labelPn.Name = "labelPn";
+            this.labelPn.Size = new System.Drawing.Size(293, 39);
+            this.labelPn.TabIndex = 8;
+            this.labelPn.Text = "XXXX-XXXXXX-XX";
+            this.labelPn.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 23);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Fixture ID";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(362, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 23);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "EMP ID";
+            // 
+            // textFixture
+            // 
+            this.textFixture.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textFixture.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textFixture.Location = new System.Drawing.Point(106, 14);
+            this.textFixture.Name = "textFixture";
+            this.textFixture.Size = new System.Drawing.Size(218, 31);
+            this.textFixture.TabIndex = 0;
+            this.textFixture.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textFixture_KeyPress);
+            // 
+            // textEmp
+            // 
+            this.textEmp.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textEmp.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textEmp.Location = new System.Drawing.Point(435, 14);
+            this.textEmp.Name = "textEmp";
+            this.textEmp.Size = new System.Drawing.Size(159, 31);
+            this.textEmp.TabIndex = 1;
+            this.textEmp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textEmp_KeyPress);
+            // 
+            // textSn
+            // 
+            this.textSn.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textSn.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textSn.Location = new System.Drawing.Point(106, 51);
+            this.textSn.Name = "textSn";
+            this.textSn.Size = new System.Drawing.Size(488, 31);
+            this.textSn.TabIndex = 3;
+            this.textSn.Text = "111111";
+            this.textSn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textSn_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(12, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 23);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Serial No.";
+            // 
+            // labelCounter
+            // 
+            this.labelCounter.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCounter.ForeColor = System.Drawing.Color.Blue;
+            this.labelCounter.Location = new System.Drawing.Point(813, 78);
+            this.labelCounter.Name = "labelCounter";
+            this.labelCounter.Size = new System.Drawing.Size(217, 23);
+            this.labelCounter.TabIndex = 11;
+            this.labelCounter.Text = "0 / 10000";
+            this.labelCounter.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.labelCounter.TextChanged += new System.EventHandler(this.labelCounter_TextChanged);
+            // 
+            // tabPageDUTGPIO
+            // 
+            this.tabPageDUTGPIO.Controls.Add(this.btn_pulllow);
+            this.tabPageDUTGPIO.Controls.Add(this.pullhigh_btn);
+            this.tabPageDUTGPIO.Controls.Add(this.tB_enterpinN);
+            this.tabPageDUTGPIO.Controls.Add(this.label5);
+            this.tabPageDUTGPIO.Controls.Add(this.Init_btn);
+            this.tabPageDUTGPIO.Location = new System.Drawing.Point(4, 27);
+            this.tabPageDUTGPIO.Name = "tabPageDUTGPIO";
+            this.tabPageDUTGPIO.Size = new System.Drawing.Size(1160, 559);
+            this.tabPageDUTGPIO.TabIndex = 4;
+            this.tabPageDUTGPIO.Text = "DUT GPIO";
+            this.tabPageDUTGPIO.UseVisualStyleBackColor = true;
+            this.tabPageDUTGPIO.Click += new System.EventHandler(this.tabPageDUTGPIO_Click);
+            // 
+            // Init_btn
+            // 
+            this.Init_btn.Location = new System.Drawing.Point(33, 25);
+            this.Init_btn.Name = "Init_btn";
+            this.Init_btn.Size = new System.Drawing.Size(132, 50);
+            this.Init_btn.TabIndex = 0;
+            this.Init_btn.Text = "Init_GPIO";
+            this.Init_btn.UseVisualStyleBackColor = true;
+            this.Init_btn.Click += new System.EventHandler(this.btninit_click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(33, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(82, 18);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Pin Number";
+            // 
+            // tB_enterpinN
+            // 
+            this.tB_enterpinN.Location = new System.Drawing.Point(136, 107);
+            this.tB_enterpinN.Name = "tB_enterpinN";
+            this.tB_enterpinN.Size = new System.Drawing.Size(100, 26);
+            this.tB_enterpinN.TabIndex = 2;
+            this.tB_enterpinN.TextChanged += new System.EventHandler(this.LBenterpinN_textchanged);
+            // 
+            // pullhigh_btn
+            // 
+            this.pullhigh_btn.Location = new System.Drawing.Point(261, 104);
+            this.pullhigh_btn.Name = "pullhigh_btn";
+            this.pullhigh_btn.Size = new System.Drawing.Size(135, 31);
+            this.pullhigh_btn.TabIndex = 3;
+            this.pullhigh_btn.Text = "PULL High";
+            this.pullhigh_btn.UseVisualStyleBackColor = true;
+            this.pullhigh_btn.Click += new System.EventHandler(this.btnpullhigh_Click);
+            // 
+            // btn_pulllow
+            // 
+            this.btn_pulllow.Location = new System.Drawing.Point(426, 104);
+            this.btn_pulllow.Name = "btn_pulllow";
+            this.btn_pulllow.Size = new System.Drawing.Size(135, 31);
+            this.btn_pulllow.TabIndex = 4;
+            this.btn_pulllow.Text = "PULL Low";
+            this.btn_pulllow.UseVisualStyleBackColor = true;
+            this.btn_pulllow.Click += new System.EventHandler(this.btnpulllow_Click);
+            // 
+            // PhilipsEmeraldTestTool
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1200, 694);
+            this.Controls.Add(this.labelCounter);
+            this.Controls.Add(this.textEmp);
+            this.Controls.Add(this.textSn);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textFixture);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.labelPn);
+            this.Controls.Add(this.tabControlPattern);
+            this.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "PhilipsEmeraldTestTool";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Philips Emerald Test Tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.PhilipsEmeraldTestTool_Load);
+            this.tabControlPattern.ResumeLayout(false);
+            this.tabPageAll.ResumeLayout(false);
+            this.tabPageAll.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewTest)).EndInit();
+            this.tabPageSetting.ResumeLayout(false);
+            this.tabPageSetting.PerformLayout();
+            this.tabPageButton.ResumeLayout(false);
+            this.tabPageButton.PerformLayout();
+            this.groupValue7.ResumeLayout(false);
+            this.groupValue7.PerformLayout();
+            this.groupDir7.ResumeLayout(false);
+            this.groupDir7.PerformLayout();
+            this.groupValue3.ResumeLayout(false);
+            this.groupValue3.PerformLayout();
+            this.groupDir3.ResumeLayout(false);
+            this.groupDir3.PerformLayout();
+            this.groupValue6.ResumeLayout(false);
+            this.groupValue6.PerformLayout();
+            this.groupDir6.ResumeLayout(false);
+            this.groupDir6.PerformLayout();
+            this.groupValue2.ResumeLayout(false);
+            this.groupValue2.PerformLayout();
+            this.groupDir2.ResumeLayout(false);
+            this.groupDir2.PerformLayout();
+            this.groupValue5.ResumeLayout(false);
+            this.groupValue5.PerformLayout();
+            this.groupDir5.ResumeLayout(false);
+            this.groupDir5.PerformLayout();
+            this.groupValue1.ResumeLayout(false);
+            this.groupValue1.PerformLayout();
+            this.groupDir1.ResumeLayout(false);
+            this.groupDir1.PerformLayout();
+            this.groupValue4.ResumeLayout(false);
+            this.groupValue4.PerformLayout();
+            this.groupDir4.ResumeLayout(false);
+            this.groupDir4.PerformLayout();
+            this.groupValue0.ResumeLayout(false);
+            this.groupValue0.PerformLayout();
+            this.groupDir0.ResumeLayout(false);
+            this.groupDir0.PerformLayout();
+            this.tabPageVISA.ResumeLayout(false);
+            this.tabPageVISA.PerformLayout();
+            this.groupBoxDisplay.ResumeLayout(false);
+            this.groupBoxDisplay.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).EndInit();
+            this.tabPageDUTGPIO.ResumeLayout(false);
+            this.tabPageDUTGPIO.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+        private System.ComponentModel.BackgroundWorker workerTestProccess;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ComboBox combo_serial;
+        private System.Windows.Forms.TabControl tabControlPattern;
+        private System.Windows.Forms.TabPage tabPageSetting;
+        private System.Windows.Forms.TabPage tabPageButton;
+        private System.Windows.Forms.TabPage tabPageAll;
+        private System.Windows.Forms.DataGridView gridViewTest;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelSerial;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnBarcode;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnAtmelPath;
+        private System.Windows.Forms.Label labelAtmelPath;
+        private System.Windows.Forms.Button btnPollingDQA_DIO;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label100;
+        private System.Windows.Forms.RadioButton radioDirOut0;
+        private System.Windows.Forms.RadioButton radioDirIn0;
+        private System.Windows.Forms.Button btnSetDAQ_DIO;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboDioPort;
+        private System.Windows.Forms.GroupBox groupDir0;
+        private System.Windows.Forms.GroupBox groupDir7;
+        private System.Windows.Forms.RadioButton radioDirIn7;
+        private System.Windows.Forms.RadioButton radioDirOut7;
+        private System.Windows.Forms.GroupBox groupDir3;
+        private System.Windows.Forms.RadioButton radioDirIn3;
+        private System.Windows.Forms.RadioButton radioDirOut3;
+        private System.Windows.Forms.GroupBox groupDir6;
+        private System.Windows.Forms.RadioButton radioDirIn6;
+        private System.Windows.Forms.RadioButton radioDirOut6;
+        private System.Windows.Forms.GroupBox groupDir2;
+        private System.Windows.Forms.RadioButton radioDirIn2;
+        private System.Windows.Forms.RadioButton radioDirOut2;
+        private System.Windows.Forms.GroupBox groupDir5;
+        private System.Windows.Forms.RadioButton radioDirIn5;
+        private System.Windows.Forms.RadioButton radioDirOut5;
+        private System.Windows.Forms.GroupBox groupDir1;
+        private System.Windows.Forms.RadioButton radioDirIn1;
+        private System.Windows.Forms.RadioButton radioDirOut1;
+        private System.Windows.Forms.GroupBox groupDir4;
+        private System.Windows.Forms.RadioButton radioDirIn4;
+        private System.Windows.Forms.RadioButton radioDirOut4;
+        private System.Windows.Forms.GroupBox groupValue7;
+        private System.Windows.Forms.RadioButton radioValueH7;
+        private System.Windows.Forms.RadioButton radioValueL7;
+        private System.Windows.Forms.GroupBox groupValue3;
+        private System.Windows.Forms.RadioButton radioValueH3;
+        private System.Windows.Forms.RadioButton radioValueL3;
+        private System.Windows.Forms.GroupBox groupValue6;
+        private System.Windows.Forms.RadioButton radioValueH6;
+        private System.Windows.Forms.RadioButton radioValueL6;
+        private System.Windows.Forms.GroupBox groupValue2;
+        private System.Windows.Forms.RadioButton radioValueH2;
+        private System.Windows.Forms.RadioButton radioValueL2;
+        private System.Windows.Forms.GroupBox groupValue5;
+        private System.Windows.Forms.RadioButton radioValueH5;
+        private System.Windows.Forms.RadioButton radioValueL5;
+        private System.Windows.Forms.GroupBox groupValue1;
+        private System.Windows.Forms.RadioButton radioValueH1;
+        private System.Windows.Forms.RadioButton radioValueL1;
+        private System.Windows.Forms.GroupBox groupValue4;
+        private System.Windows.Forms.RadioButton radioValueH4;
+        private System.Windows.Forms.RadioButton radioValueL4;
+        private System.Windows.Forms.GroupBox groupValue0;
+        private System.Windows.Forms.RadioButton radioValueH0;
+        private System.Windows.Forms.RadioButton radioValueL0;
+        private System.Windows.Forms.Label labelPn;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textEmp;
+        private System.Windows.Forms.TextBox textFixture;
+        private System.Windows.Forms.TextBox textSn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelPoccess;
+        private System.Windows.Forms.Label labelSfisInfo;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label labelSfisResult;
+        private System.Windows.Forms.RichTextBox richTextSfis;
+        private System.Windows.Forms.Label labelTestResult;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStep;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnTest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnMeasured;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnUL;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnErrorCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnStatus;
+        private System.Windows.Forms.TabPage tabPageVISA;
+        private System.Windows.Forms.ComboBox cboGPIB;
+        private System.Windows.Forms.RadioButton rbtGPIB;
+        private System.Windows.Forms.ComboBox cboBaudRate;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.GroupBox groupBoxDisplay;
+        private System.Windows.Forms.TextBox txtDisplay;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label lblCommand;
+        private System.Windows.Forms.ComboBox cboCommand;
+        private System.Windows.Forms.Button btnWrite;
+        private System.Windows.Forms.Button btnRead;
+        private System.Windows.Forms.Button btnQuery;
+        private System.Windows.Forms.Label lblOverTime;
+        private System.Windows.Forms.NumericUpDown nudTimeout;
+        private System.Windows.Forms.Label lblTimeout;
+        private System.Windows.Forms.Label lblStopBits;
+        private System.Windows.Forms.ComboBox cboStopBits;
+        private System.Windows.Forms.Label lblDataBits;
+        private System.Windows.Forms.ComboBox cboDataBits;
+        private System.Windows.Forms.Label lblFlowControl;
+        private System.Windows.Forms.ComboBox cboFlowControl;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cboParity;
+        private System.Windows.Forms.Label lblBaudRate;
+        private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.RadioButton rbtRS232;
+        private System.Windows.Forms.ComboBox cboUSB;
+        private System.Windows.Forms.ComboBox cboRS232;
+        private System.Windows.Forms.RadioButton rbtUSB;
+        private System.Windows.Forms.Label labelCounter;
+        private System.Windows.Forms.Button btn_DR2003_OnOff;
+        private System.Windows.Forms.Label lab_DR2003_OnOff;
+        private System.Windows.Forms.TabPage tabPageDUTGPIO;
+        private System.Windows.Forms.Button Init_btn;
+        private System.Windows.Forms.TextBox tB_enterpinN;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button pullhigh_btn;
+        private System.Windows.Forms.Button btn_pulllow;
+    }
+}
+

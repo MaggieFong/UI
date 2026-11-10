@@ -1,0 +1,1320 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Diagnostics;
+using System.Threading;
+using System.IO;
+using WindowsFormsAppTest1.Utility;
+using WindowsFormsAppTest1.Port;
+using WindowsFormsAppTest1.Extension;
+using WindowsFormsAppTest1.Properties;
+using Ivi.Visa;
+using NationalInstruments.Visa;
+
+
+using IniFileAccess;
+using ShopFlowInformationSystem;
+
+
+namespace WindowsFormsAppTest1
+{
+    using TestItemForm;
+    
+    public partial class PhilipsEmeraldTestTool : Form
+    {
+        //type define
+        private enum TEST_PHASE
+        {
+            INIT,
+            UPDATE
+        };
+
+        private class ReportProccessBarInfo
+        {
+            public int index;
+            public TEST_PHASE phase;
+            public bool result;
+            public String message;
+
+            public ReportProccessBarInfo(int i, TEST_PHASE p, bool r, String m)
+            {
+                index = i;
+                phase = p;
+                result = r;
+                message = m;
+            }
+        };
+
+        // Constant definition
+        private const int VK_RETURN = 13;
+        private const int COL_NUM_MEASURED = 2;
+        private const int COL_NUM_STATUS = 6;
+
+        private const string fileConfig = @".\config.ini";
+
+        //member var.
+        private TestItems testItems = new TestItems();
+        private int dTotalTestSteps;
+
+        public bool CancelDisplayForm { private set; get; }
+        public PhilipsEmeraldTestTool()
+        {
+            InitializeComponent();
+
+            initConfig();
+
+            //enum serial port
+            String[] ports = System.IO.Ports.SerialPort.GetPortNames();
+            for (int i = 0; i < ports.Length; i++)
+            {
+                combo_serial.Items.Add(ports[i]);
+            }
+
+            // test sop initial
+            testItems = new TestItems();
+            dTotalTestSteps = testItems.getTestItemsCount();
+            Console.WriteLine("Total Test items: " + dTotalTestSteps);
+            DataGridViewRowCollection rows = gridViewTest.Rows;
+            for (uint i = 0; i < dTotalTestSteps; i++)
+            {
+                //rows.Add(new Object[] { testItems.getTestString(i),
+                //    testItems.getMeasuredString(i),
+                //    testItems.getExpectedString(i), "" });
+
+                rows.Add(new Object[] { testItems.getStepString(i),
+                                        testItems.getTestString(i),
+                                        "",
+                                        testItems.getLowerLimitString(i),
+                                        testItems.getUpperLimitString(i),
+                                        testItems.getErrorCodeString(i),
+                                        "" });
+            }
+            labelPoccess.Text = "0 / " + Convert.ToString(dTotalTestSteps);
+
+
+            //test page: DAQ DIO
+            dio = new DAQdio();
+            cBox_portN.Items.Add("P.0");
+            cBox_portN.Items.Add("P.1");
+            cBox_portN.Items.Add("P.2");
+            cBox_portN.Items.Add("P.3");
+            cBox_portN.Items.Add("P.4");
+            cBox_portN.Items.Add("P.5");
+            cBox_portN.Items.Add("P.6");
+            cBox_portN.Items.Add("P.7");
+            cBox_portN.Items.Add("P.0-7");
+ comboDioPort.Items.AddRange(dio.getGetPhysicaldev());
+            comboDioPort.SelectedIndex = 0;
+            cBox_portN.SelectedIndex = 0;
+            dio = null
+        }
+
+        int[] baudRate = { 256000, 128000, 115200, 57600, 56000, 43000, 38400, 28800, 19200, 9600, 4800, 2400, 1200, 600, 300, 110 };
+        int[] dataBits = { 8, 7, 6 };
+        string[] asciiCommands = { "*IDN?", "*TST?", "*RST", "*CLS", "*ESE", "*ESE?", "*ESR?", "*OPC", "*OPC?", "*PSC", "*PSC?", "*SRE", "*SRE?", "*STB?", "*SAV", "*RCL", "*TRG" };
+        string[] hexCommands;
+        bool isAsciiCommand = true;
+        CancellationTokenSource cts;
+        private BK8601 BK8601;
+        private DR2003 DR2003;
+
+        private void PhilipsEmeraldTestTool_Load(object sender, EventArgs e)
+        {
+            cts = new CancellationTokenSource();
+            rbtUSB.Checked = true;
+            btnRefresh.PerformClick();
+            btnOpen.Text = Resources.OpenString;
+            cboBaudRate.DataSource = baudRate;
+            cboBaudRate.SelectedIndex = 3;
+            cboParity.DataSource = Enum.GetValues(typeof(SerialParity));
+            cboStopBits.DataSource = Enum.GetValues(typeof(SerialStopBitsMode));
+            cboStopBits.SelectedIndex = 0;
+            cboDataBits.DataSource = dataBits;
+            cboFlowControl.DataSource = Enum.GetValues(typeof(SerialFlowControlModes));
+            //Ascii
+            asciiCommands = asciiCommands.OrderBy(n => n).ToArray();
+            cboCommand.DataSource = asciiCommands;
+            //Hex
+            hexCommands = asciiCommands.ToHexString();
+            cboCommand.SelectedIndex = 4;
+            //EnableControl(true);
+            if (CancelDisplayForm)
+                Close();
+            //Disable gridView sort function
+            for (int i = 0; i < gridViewTest.Columns.Count; i++)
+                gridViewTest.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+
+            labelPn.Text = ProdConfig.PartNumber;
+            if (Config.sfisEnable != true)
+            {
+                richTextSfis.BackColor = SystemColors.AppWorkspace;
+                richTextSfis.Text = "[SFIS] Disabled";
+                labelSfisInfo.BackColor = Color.Yellow;
+            }
+            else
+            {
+                richTextSfis.BackColor = SystemColors.Window;
+                richTextSfis.Clear();
+                labelSfisInfo.BackColor = Color.Transparent;
+            }
+
+
+            labelCounter.Text = "0 / " + Counter.maxNumber.ToString();
+
+            textSn.MaxLength = ProdConfig.snLength;
+            textFixture.Focus();
+
+        }
+
+        private void textFixture_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (textFixture.Text.Length > 0 && e.KeyChar == VK_RETURN)
+            {
+                TIniFile iniCounter = new TIniFile(Config.fileCounter);
+                Counter.currentCount = Convert.ToInt32(iniCounter.iniReadValue("Fixture_Count", textFixture.Text, "0"));
+                labelCounter.Text = Counter.currentCount.ToString() + " / " + Counter.maxNumber.ToString();
+                textEmp.Focus();
+            }
+        }
+
+        private void textEmp_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (textEmp.Text.Length > 0 && e.KeyChar == VK_RETURN)
+            {
+                textSn.Focus();
+            }
+        }
+
+        private void textSn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+            if (e.KeyChar != VK_RETURN || textSn.Text.Length == 0)
+                return;
+
+            if (Config.sfisEnable == true)
+                richTextSfis.Clear();
+
+            labelSfisResult.Text = "N/A";
+            labelTestResult.Text = "N/A";
+            progressBar1.Value = 0;
+            TestItemInit();
+
+            // check SN length
+            if (textSn.Text.Length != ProdConfig.snLength)
+            {
+                MessageBox.Show(null, "SN length error.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textSn.Text = "";
+                textSn.Focus();
+                return;
+            }
+
+            // check SN prefix
+            if (textSn.Text.Substring(0, (textSn.Text.Length > ProdConfig.snPrefix.Length) ? ProdConfig.snPrefix.Length : textSn.Text.Length) != ProdConfig.snPrefix)
+            {
+                MessageBox.Show(null, "SN not valid.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textSn.Text = "";
+                textSn.Focus();
+                return;
+            }
+
+            // check probe count
+            if (Counter.currentCount >= Counter.maxNumber)
+            {
+                PasswordForm passwordQueryForm = new PasswordForm();
+                passwordQueryForm.ShowDialog();
+
+                if (Counter.passwordMatch == true)
+                {
+                    TIniFile iniCounter = new TIniFile(Config.fileCounter);
+
+                    Counter.currentCount = 0;
+                    labelCounter.Text = "0";
+                    labelCounter.Text = Counter.currentCount.ToString() + " / " + Counter.maxNumber.ToString();
+                    iniCounter.iniWriteValue("Fixture_Count", textFixture.Text, Counter.currentCount.ToString());
+                }
+                else
+                {
+                    MessageBox.Show(null, "Probe counter reaches the max number.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSn.Text = "";
+                    textSn.Focus();
+                    return;
+                }
+            }
+
+            // SFIS
+            if (Config.sfisEnable == true)
+            {
+                string sfisResult;
+                string DutSn = textSn.Text;
+
+                if (Config.sfisSendStep1 == true)
+                {
+                    // check DUT, EMP, Fixture status
+                    sfisResult = SendSfis(DutSn, 1, null, null);
+                    if (!sfisResult.ToUpper().Contains("OK"))
+                    {
+                        MessageBox.Show(null, "[SFIS] " + sfisResult, "SFIS Fail", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        textSn.Text = "";
+                        textSn.Focus();
+                        return;
+                    }
+                }
+
+                // check the code file match with SFIS
+                sfisResult = SendSfis(DutSn, 7, "KP_NO=???", null);
+                if (sfisResult.ToUpper().Contains("ERROR"))
+                {
+                    MessageBox.Show(null, "[SFIS] " + sfisResult, "SFIS Fail", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textSn.Text = "";
+                    textSn.Focus();
+                    return;
+                }
+                else
+                {
+                    if (Path.GetFileNameWithoutExtension(ProdConfig.fileProductCode).ToUpper() != sfisResult.Trim().ToUpper())
+                    {
+                        MessageBox.Show(null, "Product Code name not correct.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        textSn.Text = "";
+                        textSn.Focus();
+                        return;
+                    }
+                }
+
+                // pass all check process
+                btnStart.Enabled = true;
+                btnStart.Focus();
+          
+                if (ProdConfig.autoRun == true)
+                    btnStart.PerformClick();
+                
+            }
+            else //if (Config.sfisEnable == true)
+            {
+                btnStart.Enabled = true;
+                btnStart.Focus();
+
+                if (ProdConfig.autoRun == true)
+                    btnStart.PerformClick();
+            }
+        }
+        
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+
+            TIniFile iniCounter = new TIniFile(Config.fileCounter);
+            Counter.currentCount += 1;
+            labelCounter.Text = Counter.currentCount.ToString() + " / " + Counter.maxNumber.ToString();
+            iniCounter.iniWriteValue("Fixture_Count", textFixture.Text, Counter.currentCount.ToString());
+
+            StaticValues.sBarCode = textSn.Text;
+
+            if (workerTestProccess.IsBusy == false)     //stop -> start
+            {
+                button.Text = "Stop";
+                textFixture.Enabled = false;
+                textEmp.Enabled = false;
+                textSn.Enabled = false;
+                workerTestProccess.RunWorkerAsync();
+            }
+            else        //start -> stop
+            {
+                button.Text = "Start";
+                workerTestProccess.CancelAsync();
+            }
+        }
+
+
+        private void workerTestProccess_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int testIndex = 0;
+            int testStatus = 0;
+
+            StaticValues.setTestTimer();       //start to measure testing time
+            workerTestProccess.ReportProgress(0, new ReportProccessBarInfo(0, TEST_PHASE.INIT, true, ""));
+
+            while (dTotalTestSteps != testIndex)
+            {
+                System.Threading.Thread.Sleep(50);      //
+                if (workerTestProccess.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                {
+                    switch (testStatus)
+                    {
+                        case 0:     //init
+                            switch (testItems.getTestItem(testIndex).Init())
+                            {
+                                case TestItemForm.WORK_STATUS.WORKING:
+                                    break;
+                                case TestItemForm.WORK_STATUS.FAIL:
+                                    workerTestProccess.ReportProgress(testIndex,
+                                        new ReportProccessBarInfo(testIndex, TEST_PHASE.UPDATE, true, "Fail"));
+                                    testItems.getTestItem(testIndex).release();     //release memory
+                                    return;     //break out test proccess
+                                case TestItemForm.WORK_STATUS.PASS:
+                                    testStatus = 1;
+                                    workerTestProccess.ReportProgress(testIndex,
+                                        new ReportProccessBarInfo(testIndex, TEST_PHASE.UPDATE, true, "Process..."));
+                                    break;
+                            }
+                            break;
+                        case 1:     //proccess
+                            switch (testItems.getTestItem(testIndex).Proccess())
+                            {
+                                case TestItemForm.WORK_STATUS.WORKING:
+                                    break;
+                                case TestItemForm.WORK_STATUS.FAIL:
+                                    workerTestProccess.ReportProgress(testIndex,
+                                        new ReportProccessBarInfo(testIndex, TEST_PHASE.UPDATE, true, "Fail"));
+                                    testItems.getTestItem(testIndex).release();     //release memory
+                                    return;     //break out test proccess
+                                case TestItemForm.WORK_STATUS.PASS:
+                                    workerTestProccess.ReportProgress(testIndex,
+                                        new ReportProccessBarInfo(testIndex, TEST_PHASE.UPDATE, true, "Pass"));
+
+                                    testItems.getTestItem(testIndex).bResult = true;
+                                    testItems.getTestItem(testIndex).release();     //release memory
+                                    testStatus = 0;
+                                    testIndex += 1;
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void workerTestProccess_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ReportProccessBarInfo info = (ReportProccessBarInfo)e.UserState;
+            int index = e.ProgressPercentage;
+            switch (info.phase)
+            {
+                case TEST_PHASE.INIT:
+                    break;
+                case TEST_PHASE.UPDATE:
+                    progressBar1.Value = (index + 1) * 100 / dTotalTestSteps;
+                    labelPoccess.Text = Convert.ToString(index + 1) + " / " + Convert.ToString(dTotalTestSteps);
+
+                    DataGridViewRowCollection rows = gridViewTest.Rows;
+                    rows[index].SetValues(new Object[] {
+                            testItems.getStepString((uint)index),
+                            testItems.getTestString((uint)index),
+                            testItems.getMeasuredString((uint)index),
+                            testItems.getLowerLimitString((uint)index),
+                            testItems.getUpperLimitString((uint)index),
+                            testItems.getErrorCodeString((uint)index),
+                            info.message});
+
+                    break;
+            }
+
+        }
+
+        private void workerTestProccess_Completed(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+
+
+            }
+            else
+            {
+
+                //progressBar1.Value = 100;
+            }
+
+            if (StaticValues.hwTestRPCDevice != null)
+            {
+                StaticValues.hwTestRPCDevice.Dispose();
+                StaticValues.hwTestRPCDevice = null;
+            }
+
+            btnStart.Text = "Start";
+            //btnStart.Enabled = false;
+            bool allResult = true;
+            string errorCode = null;
+            for (int i = 0; i < dTotalTestSteps; i++)
+            {
+                allResult &= testItems.getTestItem(i).bResult;
+                if (allResult == true)
+                {
+                    errorCode = testItems.getTestItem(i).sErrorCode;
+                    break;
+                }
+            }
+
+            if (allResult == true)
+                labelTestResult.Text = "PASS";
+            else
+                labelTestResult.Text = "FAIL";
+
+            if (Config.sfisEnable == true)
+            {
+                if (allResult == true || (allResult == false && Config.sfisSendFail == true))
+                {
+                    string sfisResult = SendSfis(textSn.Text, 2, null, errorCode);
+
+                    if (sfisResult == "OK")
+                        labelSfisResult.Text = "PASS";
+                    else
+                        labelSfisResult.Text = "FAIL";
+                }
+            }
+
+            textSn.Enabled = true;
+            textSn.SelectAll();
+            textSn.Focus();
+        }
+
+        private void DoSomethingForRadioButton(params Action[] actionOfRbt)
+        {
+            if (actionOfRbt.Length != 3) throw new ArgumentException();
+            if (rbtRS232.Checked) actionOfRbt[0]();
+            if (rbtUSB.Checked) actionOfRbt[1]();
+            if (rbtGPIB.Checked) actionOfRbt[2]();
+        }
+
+        private void selectedPage(object sender, EventArgs e)
+        {
+                        
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (t != null && !t.IsCompleted)
+            {
+                MessageBox.Show(Resources.LoadingInstrumentResource);
+                e.Cancel = true;
+                return;
+            }
+            cts.Cancel();
+            try
+            {
+                portOperatorBase?.Close();
+            }
+            catch { }
+        }
+
+        private void combo_serial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox combo = (ComboBox)sender;
+            StaticValues.sSerialPort = combo.SelectedItem.ToString();
+        }
+
+        private void btnAtmelPath_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Select Atmel programing file";
+            dialog.InitialDirectory = ".\\";
+            dialog.Filter = "exe files (*.*)|*.exe";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                ProdConfig.fileProgrammer = dialog.FileName;
+                labelAtmelPath.Text = dialog.FileName;
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Test for DAQ DIO
+        /// </summary>
+        private DAQdio dio;
+        private int numWrite, numRead;
+        /// <summary>
+        /// Test for DAQ DIO
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSetDAQ_DIO_Click(object sender, EventArgs e)
+        {
+            int port;
+            numWrite = 0;
+            numRead = 0;
+            port = comboDioPort.SelectedIndex;
+            try
+            {
+                dio = new DAQdio("dev2");
+                if (radioDirIn0.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2",port, 0);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 0, false);
+                }
+
+                if (radioDirIn1.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 1);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 1, false);
+                }
+
+                if (radioDirIn2.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 2);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 2, false);
+                }
+
+                if (radioDirIn3.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 3);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 3, false);
+                }
+
+                if (radioDirIn4.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 4);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 4, false);
+                }
+
+                if (radioDirIn5.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 5);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 5, false);
+                }
+
+                if (radioDirIn6.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 6);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 6, false);
+                }
+
+                if (radioDirIn7.Checked)
+                {
+                    numRead += 1;
+                    dio.addReadChannel("dev2", port, 7);
+                }
+                else
+                {
+                    numWrite += 1;
+                    dio.addWriteChannel("dev2", port, 7, false);
+                }
+            }
+            catch(Exception exception)
+            {
+                dio = null;
+                MessageBox.Show(exception.Message);
+            }
+        }
+
+        Task t = null;
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            string title = Text;
+            t = Task.Factory.StartNew(() =>
+            {
+                InvokeToForm(() => { btnRefresh.Enabled = false; btnOpen.Enabled = false; Text = title + Resources.LoadingRS232; });
+                string[] content1 = PortUltility.FindAddresses(PortType.RS232);
+                string[] content2 = PortUltility.FindRS232Type(content1);
+                List<string> list1 = new List<string>();
+                List<string> list2 = new List<string>();
+                for (int i = 0; i < content2.Length; i++)
+                {
+                    if (content2[i].Contains("LPT")) continue;
+                    list1.Add(content1[i]);
+                    list2.Add(content2[i]);
+                }
+                content1 = list1.ToArray();
+                content2 = list2.ToArray();
+                InvokeToForm(() => cboRS232.ShowAndDisplay(content1, content2));
+                InvokeToForm(() => { Text = title + Resources.LoadingUSB; });
+                content1 = PortUltility.FindAddresses(PortType.USB);
+                InvokeToForm(() => cboUSB.ShowAndDisplay(content1));
+                InvokeToForm(() => { Text = title + Resources.LoadingGPIB; });
+                content1 = PortUltility.FindAddresses(PortType.GPIB);
+                InvokeToForm(() => cboGPIB.ShowAndDisplay(content1));
+                //InvokeToForm(() => { Text = title + Resources.LoadingLAN; });
+                //content1 = PortUltility.FindAddresses(PortType.LAN);
+                //InvokeToForm(() => cboLAN.ShowAndDisplay(content1));
+                InvokeToForm(() => { btnRefresh.Enabled = true; btnOpen.Enabled = true; Text = title; });
+            }).ContinueWith(x =>
+            {
+                if (x.IsFaulted)
+                {
+                    CancelDisplayForm = true;
+                    InvokeToForm(() => { this.Text = Resources.RuntimeError; });
+                }
+            });
+        }
+
+        PortOperatorBase portOperatorBase;
+        bool isWritingError = false;
+        private void btnWrite_Click(object sender, EventArgs e)
+        {
+            isWritingError = false;
+            if (string.IsNullOrEmpty(cboCommand.Text))
+            {
+                MessageBox.Show(Resources.CommandNotEmpty);
+                return;
+            }
+            string content;
+            if (isAsciiCommand)
+            {
+                content = cboCommand.Text;
+            }
+            else
+            {
+                try
+                {
+                    content = cboCommand.Text.ToAsciiString();
+                }
+                catch (Exception ex)
+                {
+                    isWritingError = true;
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            try
+            {
+                portOperatorBase.WriteLine(content);    //送出command
+                cboCommand.AddItem(cboCommand.Text);    //將送出的command增加到List清單
+            }
+            catch
+            {
+                content = $"寫入命令\"{cboCommand.Text}\"失敗！";
+            }
+            DisplayToTextBox($"[Time:{stopwatch.ElapsedMilliseconds}ms] Write: {cboCommand.Text}");
+        }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            ClearIfTextBoxOverFlow();
+            string result;
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            try
+            {
+                if (isAsciiCommand)
+                {
+                    result = portOperatorBase.ReadLine();
+                }
+                else
+                {
+                    result = portOperatorBase.ReadLine().ToHexString();
+                }
+            }
+            catch (IOTimeoutException)
+            {
+                result = Resources.ReadTimeout;
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+            }
+            DisplayToTextBox($"[Time:{stopwatch.ElapsedMilliseconds}ms] Read:  {result}");
+        }
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            btnWrite.PerformClick();
+            if (!isWritingError) btnRead.PerformClick();
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            if (btnOpen.Text == Resources.OpenString)   //Connect
+            {
+                if (NewPortInstance())
+                {
+                    try
+                    {
+                        portOperatorBase.Open();
+                        btnOpen.Text = Resources.CloseString;
+                        EnableControl(false);
+                    }
+                    catch { }
+                }
+            }
+            else
+            {
+                try
+                {
+                    portOperatorBase.Close();
+                }
+                catch { }
+                btnOpen.Text = Resources.OpenString;
+                EnableControl(true);
+            }
+        }
+         
+        private void btnPollingDQA_DIO_Click(object sender, EventArgs e)
+        {
+            if (dio != null)
+            {
+                int idx = 0;
+                //output
+                if (numWrite > 0)
+                { 
+                    bool[] dataArray = new bool[numWrite];
+                    if (radioDirOut0.Checked)
+                        dataArray[idx++] = radioValueH0.Checked;
+                    if (radioDirOut1.Checked)
+                        dataArray[idx++] = radioValueH1.Checked;
+                    if (radioDirOut2.Checked)
+                        dataArray[idx++] = radioValueH2.Checked;
+                    if (radioDirOut3.Checked)
+                        dataArray[idx++] = radioValueH3.Checked;
+                    if (radioDirOut4.Checked)
+                        dataArray[idx++] = radioValueH4.Checked;
+                    if (radioDirOut5.Checked)
+                        dataArray[idx++] = radioValueH5.Checked;
+                    if (radioDirOut6.Checked)
+                        dataArray[idx++] = radioValueH6.Checked;
+                    if (radioDirOut7.Checked)
+                        dataArray[idx++] = radioValueH7.Checked;
+                    dio.setDatas(dataArray);
+                }
+                idx = 0;
+                //input
+                if(numRead > 0)
+                {
+                    bool[] readArray = new bool[numRead];
+                    dio.getDatas(ref readArray);
+                    if (radioDirIn0.Checked)
+                    {
+                        if(readArray[idx++])
+                            radioValueH0.Checked = true;
+                        else
+                            radioValueL0.Checked = true;
+                    }
+                    if (radioDirIn1.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH1.Checked = true;
+                        else
+                            radioValueL1.Checked = true;
+                    }
+                    if (radioDirIn2.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH2.Checked = true;
+                        else
+                            radioValueL2.Checked = true;
+                    }
+                    if (radioDirIn3.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH3.Checked = true;
+                        else
+                            radioValueL3.Checked = true;
+                    }
+                    if (radioDirIn4.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH4.Checked = true;
+                        else
+                            radioValueL4.Checked = true;
+                    }
+                    if (radioDirIn5.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH5.Checked = true;
+                        else
+                            radioValueL5.Checked = true;
+                    }
+                    if (radioDirIn6.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH6.Checked = true;
+                        else
+                            radioValueL6.Checked = true;
+                    }
+                    if (radioDirIn7.Checked)
+                    {
+                        if (readArray[idx++])
+                            radioValueH7.Checked = true;
+                        else
+                            radioValueL7.Checked = true;
+                    }
+                }
+            }
+        }
+        
+        private bool NewPortInstance()
+        {
+            bool hasAddress = false;
+            bool hasException = false;
+            DoSomethingForRadioButton(
+                () =>
+                {
+                    if (cboRS232.SelectedIndex == -1) return;
+                    try
+                    {
+                        portOperatorBase = new RS232PortOperator(((Pair<string, string>)cboRS232.SelectedItem).Value.ToString(),
+                                               (int)cboBaudRate.SelectedItem, (SerialParity)cboParity.SelectedItem,
+                                               (SerialStopBitsMode)cboStopBits.SelectedItem, (int)cboDataBits.SelectedItem);
+                        hasAddress = true;
+                    }
+                    catch
+                    {
+                        hasException = true;
+                    }
+                },
+                () =>
+                {
+                    if (cboUSB.SelectedIndex == -1) return;
+                    try
+                    {
+                        portOperatorBase = new USBPortOperator(cboUSB.SelectedItem.ToString());
+                        hasAddress = true;
+                    }
+                    catch
+                    {
+                        hasException = true;
+                    }
+                },
+                () =>
+                {
+                    if (cboGPIB.SelectedIndex == -1) return;
+                    try
+                    {
+                        portOperatorBase = new GPIBPortOperator(cboGPIB.SelectedItem.ToString());
+                        hasAddress = true;
+                    }
+                    catch
+                    {
+                        hasException = true;
+                    }
+                });
+            if (!hasException) portOperatorBase.Timeout = (int)nudTimeout.Value;
+            return hasAddress;
+        }
+
+        private void DisplayToTextBox(string content)
+        {
+            txtDisplay.Text += $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {content}\r\n";
+            txtDisplay.SelectionStart = txtDisplay.Text.Length - 1;
+            txtDisplay.ScrollToCaret();
+        }
+
+        private void ClearIfTextBoxOverFlow()
+        {
+            if (txtDisplay.Text.Length > 20480) txtDisplay.Clear();
+        }
+                
+        private void InvokeToForm(Action action)
+        {
+            try
+            {
+                this.Invoke(action);
+            }
+            catch { }
+        }
+           
+        private void EnableControl(bool enable)
+        {
+            //flowLayoutPanel1.Enabled = enable;
+            //flowLayoutPanel2.Enabled = enable;
+            btnRefresh.Enabled = enable;
+            //flowLayoutPanel5.Enabled = enable;
+            lblCommand.Enabled = !enable;
+            cboCommand.Enabled = !enable;
+            btnWrite.Enabled = !enable;
+            btnRead.Enabled = !enable;
+            btnQuery.Enabled = !enable;
+            lblOverTime.Enabled = enable;
+            lblTimeout.Enabled = enable;
+            nudTimeout.Enabled = enable;
+        }
+
+        private void gridViewTest_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                return;
+
+            DataGridView dataGridView = (DataGridView)sender;
+            DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+            if (e.ColumnIndex == COL_NUM_STATUS)
+            {
+                switch (row.Cells[COL_NUM_STATUS].Value.ToString())
+                {
+                    case "":
+                        e.CellStyle.BackColor = SystemColors.Window;
+                        break;
+
+                    case "Pass":
+                        e.CellStyle.BackColor = System.Drawing.Color.LimeGreen;
+                        break;
+
+                    case "Fail":
+                        e.CellStyle.BackColor = System.Drawing.Color.Red;
+                        break;
+
+                    case "Process...":
+                        e.CellStyle.BackColor = System.Drawing.Color.Yellow;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        private void initConfig()
+        {
+
+            //Read ini file
+            try
+            {
+                TIniFile iniConfig = new TIniFile(fileConfig);
+                Config.fileProdConfig = iniConfig.iniReadValue("Path", "Product Setting", null) + "ProdConfig.ini";
+                Config.fileSpec = iniConfig.iniReadValue("Path", "Product Setting", null) + "Spec.ini";
+                Config.pathLog = iniConfig.iniReadValue("Path", "Log", null);
+                Config.fileCounter = iniConfig.iniReadValue("Path", "Counter", null) + "Counter.ini";
+
+                Config.sfisIp = iniConfig.iniReadValue("SFIS", "Ip", "");
+                Config.sfisPort = Convert.ToInt32(iniConfig.iniReadValue("SFIS", "Port", "1024"));
+                Config.sfisLine = iniConfig.iniReadValue("SFIS", "Line", null);
+                Config.sfisEnable = Convert.ToBoolean(iniConfig.iniReadValue("SFIS", "Enable", "true"));
+                Config.sfisSendFail = Convert.ToBoolean(iniConfig.iniReadValue("SFIS", "SendFail", "true"));
+                Config.sfisSendStep1 = Convert.ToBoolean(iniConfig.iniReadValue("SFIS", "SendStep1", "true"));
+
+                Config.debugEnable = Convert.ToBoolean(iniConfig.iniReadValue("Debug Tool", "Enable", "false"));
+
+                TIniFile iniProdConfig = new TIniFile(Config.fileProdConfig);
+                ProdConfig.PartNumber = iniProdConfig.iniReadValue("Part_Number", "Value", "");
+                ProdConfig.snPrefix = iniProdConfig.iniReadValue("SN", "Prefix", null);
+                ProdConfig.snLength = Convert.ToInt32(iniProdConfig.iniReadValue("SN", "Length", null));
+                ProdConfig.fileProgrammer = iniProdConfig.iniReadValue("Atmel_ICE", "Programmer", null);
+                ProdConfig.fileTestCode = iniProdConfig.iniReadValue("Code_File", "Test_Code", null);
+                ProdConfig.fileProductCode = iniProdConfig.iniReadValue("Code_File", "Product_Code", null);
+                ProdConfig.autoRun = Convert.ToBoolean(iniProdConfig.iniReadValue("Auto_Run", "Enable", "true"));
+
+                // Equipmeent Interface
+                DCLoad_8601.usbId = iniProdConfig.iniReadValue("8601/B+K", "USB_ID", null);
+                Power_DR2002MO.comPort = iniProdConfig.iniReadValue("DR2002-MO/B+K", "COM_Name", null);
+                Power_DR2002MO.baudRate = Convert.ToInt32(iniProdConfig.iniReadValue("DR2002-MO/B+K", "Baudrate", null));
+                Power_IT6512C.usbId = iniProdConfig.iniReadValue("IT6512C/ITECH", "USB_ID", null);
+                DAQ_USB6218.deviceName = iniProdConfig.iniReadValue("USB-6218/NI", "Device_Name", null);
+                IO_USB6525_A.deviceName = iniProdConfig.iniReadValue("USB-6525_(A)/NI", "Device_Name", null);
+                IO_USB6525_B.deviceName = iniProdConfig.iniReadValue("USB-6525_(B)/NI", "Device_Name", null);
+                Feasa_10F_A.comPort = iniProdConfig.iniReadValue("10-F_(A)/Feasa", "COM_Number", null);
+                Feasa_10F_A.baudRate = Convert.ToInt32(iniProdConfig.iniReadValue("10-F_(A)/Feasa", "Baudrate", null));
+                Feasa_10F_B.comPort = iniProdConfig.iniReadValue("10-F_(B)/Feasa", "COM_Number", null);
+                Feasa_10F_B.baudRate = Convert.ToInt32(iniProdConfig.iniReadValue("10-F_(B)/Feasa", "Baudrate", null));
+                Dut.comPort = iniProdConfig.iniReadValue("DUT/USI", "COM_Name", null);
+                Dut.baudRate = Convert.ToInt32(iniProdConfig.iniReadValue("DUT/USI", "Baudrate", null));
+
+                Console.WriteLine("DCLoad_8601: {0}\nPower_DR2002MO: {1}, {2}\nPower_IT6512C: {3}", DCLoad_8601.usbId, Power_DR2002MO.comPort, Power_DR2002MO.baudRate, Power_IT6512C.usbId);
+                Console.WriteLine("DAQ_USB6218: {0}\nIO_USB6525_A: {1}\nIO_USB6525_B: {2}", DAQ_USB6218.deviceName, IO_USB6525_A.deviceName, IO_USB6525_B.deviceName);
+                Console.WriteLine("Feasa_10F_A: {0}, {1}\nFeasa_10F_B: {2}, {3}", Feasa_10F_A.comPort, Feasa_10F_A.baudRate, Feasa_10F_B.comPort, Feasa_10F_B.baudRate);
+                Console.WriteLine("DUT: {0}, {1}", Dut.comPort, Dut.baudRate);
+
+                // Countere
+                TIniFile iniCounter = new TIniFile(Config.fileCounter);
+                Counter.maxNumber = Convert.ToInt32(iniCounter.iniReadValue("Counter", "Max_Number", "5000"));
+                Counter.resetPassword = iniCounter.iniReadValue("Counter", "Reset_Password", "usikste");
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Console.WriteLine("{0}", Config.fileSpec);
+        }
+
+        private string SendSfis(string sn, int step, string queryString, string errorCode)
+        {
+            string msgFromSfis = "";
+            string msgToSfis = "";
+            string szSfisStep = step.ToString();
+            TSfis sfis = new TSfis();
+
+            switch (step)
+            {
+                case 1:
+                    msgToSfis = textFixture.Text + "," + sn + "," + szSfisStep + "," + textEmp.Text + "," + Config.sfisLine + ",,OK";
+                    msgFromSfis = sfis.Send(Config.sfisIp, Config.sfisPort, msgToSfis);
+                    break;
+
+                case 2:
+                    if (errorCode == null)
+                    {
+                        msgToSfis = textFixture.Text + "," + sn + "," + szSfisStep + "," + textEmp.Text + "," + Config.sfisLine + ",,OK";
+                    }
+                    else
+                    {
+                        msgToSfis = textFixture.Text + "," + sn + "," + szSfisStep + "," + textEmp.Text + "," + Config.sfisLine + ",,FAIL,," + errorCode;
+                    }
+                    msgFromSfis = sfis.Send(Config.sfisIp, Config.sfisPort, msgToSfis);
+                    break;
+
+                case 7:
+                    msgToSfis = textFixture.Text + "," + sn + "," + szSfisStep + "," + textEmp.Text + "," + Config.sfisLine + ",,OK," + queryString;
+                    msgFromSfis = sfis.Send(Config.sfisIp, Config.sfisPort, msgToSfis);
+                    break;
+
+                default:
+                    break;
+            }
+
+            //MessageBox.Show(msgToSfis + "\n" + msgFromSfis);
+            richTextSfis.AppendText("<<=     | " + msgToSfis + "\n");
+            richTextSfis.AppendText("    =>> | " + msgFromSfis + "\n");
+
+            string retString = "";
+            if (step == 1 || step == 2)
+            {
+                if (msgFromSfis.ToUpper().Contains("OK"))
+                {
+                    retString = "OK";
+                }
+                else
+                {
+                    retString = msgFromSfis;
+                }
+            }
+            else if (step == 7)
+            {
+                if (msgFromSfis.ToUpper().Contains("OK"))
+                {
+                    string[] msgSplit = msgFromSfis.Split('=');
+                    retString = msgSplit[msgSplit.Length - 1];
+                }
+                else
+                {
+                    retString = "ERROR: " + msgFromSfis;
+                }
+            }
+            return retString;
+        }
+
+        private void labelTestResult_TextChanged(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+            if (label.Text == "PASS")
+            {
+                label.BackColor = Color.LimeGreen;
+                label.Visible = true;
+            }
+            else if (label.Text == "FAIL")
+            {
+                label.BackColor = Color.Red;
+                label.Visible = true;
+            }
+            else
+            {
+                label.Visible = false;
+            }
+
+            label.Refresh();
+        }
+
+        private void labelResult_TextChanged(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+            if (label.Text == "PASS")
+            {
+                label.BackColor = Color.LimeGreen;
+                label.Visible = true;
+            }
+            else if (label.Text == "FAIL")
+            {
+                label.BackColor = Color.Red;
+                label.Visible = true;
+            }
+            else
+            {
+                label.Visible = false;
+            }
+
+            label.Refresh();
+        }
+
+        private void labelCounter_TextChanged(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+            if (Counter.currentCount >= Counter.maxNumber)
+                label.ForeColor = Color.Red;
+            else
+                label.ForeColor = Color.Blue;
+
+            label.Refresh();
+        }
+
+        private void btn_DR2003_OnOff_Click(object sender, EventArgs e)
+        {
+            DR2003 = new DR2003( Power_DR2002MO.comPort, Power_DR2002MO.baudRate);
+            DR2003.Connect();
+            
+            if (btn_DR2003_OnOff.Text == Resources.On2003String)   //Connect
+            {
+                btn_DR2003_OnOff.Text = Resources.Off2003String;
+                //content = $"INP 1";
+                DR2003.OutPutOn();
+                //portOperatorBase.WriteLine(content);    //送出command
+            }
+            else
+            {
+                btn_DR2003_OnOff.Text = Resources.On2003String;
+                //content = $"INP 0";
+                DR2003.OutPutOff();
+                //portOperatorBase.WriteLine(content);    //送出command
+            }
+            //BK8601.Write(content);
+            DR2003.Disconnect();
+
+        }
+
+        private void TestItemInit()
+        {
+            for (int i = 0; i < dTotalTestSteps; i++)
+            {
+                gridViewTest.Rows[i].Cells[COL_NUM_MEASURED].Value = "";
+                gridViewTest.Rows[i].Cells[COL_NUM_STATUS].Value = "";
+
+                testItems.getTestItem(i).sMeasured = null;
+                testItems.getTestItem(i).bResult = false;
+            }
+        }
+
+        private void btninit_click(object sender, EventArgs e)
+        {
+            //set outputs
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_CPDischarger, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_CPChargeFlashCap, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_LampPWM, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_CONV_OFF, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Bat_En_Battery, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Bat_En_Adapter, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Bat_En_Charging, 1);
+            //System.Threading.Thread.Sleep(100);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Bat_En_Charging, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Awake, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SpareP11, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SpareP64, 0);       //input/ output??
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Attachement_EN, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_Cooling, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_LED_driver_resetN, 1);
+            //System.Threading.Thread.Sleep(200);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_LED_driver_resetN, 0);
+            //System.Threading.Thread.Sleep(200);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_LED_driver_resetN, 1);
+            Console.WriteLine("initialIO end");
+        }
+
+        private void LBenterpinN_textchanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tabPageDUTGPIO_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnpullhigh_Click(object sender, EventArgs e)
+        {
+            byte pinN = Convert.ToByte(tB_enterpinN.Text);
+            StaticValues.hwTestRPCDevice.SetPin(pinN, 1);
+        }
+
+        private void btnpulllow_Click(object sender, EventArgs e)
+        {
+            byte pinN = Convert.ToByte(tB_enterpinN.Text);
+            StaticValues.hwTestRPCDevice.SetPin(pinN, 0);
+        }
+
+        private void SaveLog()
+        {
+            string savepath, logFileAll, logFileSn;
+            string szLogData = "";
+            string timeYM, timeYMD, timeD, timeHMS, timeHMS_file;
+
+            timeYMD = DateTime.Now.ToString("MM/dd/yyyy");
+            timeYM = DateTime.Now.ToString("yyyyMM");
+            timeD = DateTime.Now.ToString("dd");
+            timeHMS = DateTime.Now.ToString("HH:mm:ss");
+            timeHMS_file = DateTime.Now.ToString("HHmmss");
+
+            StreamWriter writer;
+            savepath = Config.pathLog + "\\" + labelPn.Text + "\\" + timeYM + "\\" + timeD;
+            logFileSn = savepath + "\\" + textSn.Text + "_" + timeHMS_file + ".csv";
+            logFileAll = Config.pathLog + "\\" + labelPn.Text + "\\" + timeYM + "\\" + labelPn.Text + "_" + timeYM + ".csv";
+            
+            Directory.CreateDirectory(savepath);
+
+            if (File.Exists(logFileAll))
+            {
+                writer = File.AppendText(logFileAll);
+            }
+            else
+            {
+                writer = File.AppendText(logFileAll);
+
+                string LogTitle = "USI_SN,Date_Time,Result,Process,Emp_ID,Fixture_ID,Code_File_Name,IDT Program,USI Program";
+                writer.WriteLine(LogTitle);
+            }
+
+            // Modify for Emerald
+            //szLogData += sn1TextBox.Text + ",";
+            //szLogData += timeYMD + " " + timeHMS + ",";
+            //szLogData += sn1Label.Text + ",";
+            //if (programRadioBtn.Checked)
+            //    szLogData += programRadioBtn.Text + ",";
+            //else
+            //    szLogData += verifyRadioBtn.Text + ",";
+            //szLogData += empTextBox.Text + ",";
+            //szLogData += fixtureTextBox.Text + ",";
+            //szLogData += Path.GetFileName(codeFile) + ",";
+            //szLogData += "\"" + IDTGuiInfo.szGuiTitle + "\",";
+            //szLogData += this.Text;
+
+            writer.WriteLine(szLogData);
+            writer.Close();
+        }
+    }
+}

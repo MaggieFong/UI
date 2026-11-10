@@ -1,0 +1,368 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsAppTest1.TestItem
+{
+    using TestItemForm;
+
+    class TestItemStep120_P1 : TestItemForm
+    {
+        public string step = "120 P1";
+
+        public TestItemStep120_P1()
+        {
+            sStep = step;
+            LoadSpec();            
+        }
+
+        public override WORK_STATUS Init()
+        {
+            ////DAC
+            //StaticValues.hwTestRPCDevice.ConfigurePin(StaticValues.uC_SCA_I_DAC,
+            //       HardwareTestRPCSerialDevice.PinTypeValue.DacPin,
+            //       HardwareTestRPCSerialDevice.PullResistorConfiguration.PullNone);
+            ////Output
+            //StaticValues.hwTestRPCDevice.ConfigurePin(StaticValues.uC_SCAred,
+            //        HardwareTestRPCSerialDevice.PinTypeValue.OutputPin,
+            //        HardwareTestRPCSerialDevice.PullResistorConfiguration.PullNone);
+            //StaticValues.hwTestRPCDevice.ConfigurePin(StaticValues.uC_SCAir,
+            //        HardwareTestRPCSerialDevice.PinTypeValue.OutputPin,
+            //        HardwareTestRPCSerialDevice.PullResistorConfiguration.PullNone);
+
+            ushort DACval = 0;
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAir, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAred, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCA_I_DAC, DACval);
+            System.Threading.Thread.Sleep(200);
+
+            return WORK_STATUS.PASS;
+        }
+        public override WORK_STATUS Proccess()
+        {
+            sMeasured = "";
+            return WORK_STATUS.PASS;
+        }
+
+        public override void release()
+        {
+
+        }
+    }
+
+    class TestItemStep120_P2 : TestItemForm
+    {
+        public string step = "120 P2";
+        private DAQadc taskADC;
+        private double r1 = 133;
+        private double r2 = 133;
+        public TestItemStep120_P2()
+        {
+            sStep = step;
+            LoadSpec();
+        }
+
+        public override WORK_STATUS Init()
+        {
+            //DAQ setting
+            try
+            {
+
+                taskADC = new DAQadc(
+                    10000, 300, DAQadc.VOLTAGE_RANGE.RANGE_0_10);  //sample rate: 10000hz, sample time: 300ms, voltage range: 0~10v
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP501_AI4);
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP504_AI12);
+
+                if (taskADC.start())
+                    return WORK_STATUS.PASS;
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    return WORK_STATUS.FAIL;
+                }
+            }
+            catch (Exception e)
+            {
+                sMeasured = e.Message;
+                return WORK_STATUS.FAIL;
+            }
+        }
+        public override WORK_STATUS Proccess()
+        {
+            WORK_STATUS re = WORK_STATUS.WORKING;
+
+            if (taskADC.isEnable() == false)
+            {
+                if (taskADC.getErrorMsg() == null)      //must check if there were any error when DAQadc.callbackADC()
+                {
+                    double average0 = taskADC.getAverage(0);
+                    double measured_v0 = average0 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP501_AI4 average:{0}, measured: {1}", average0, measured_v0);
+
+                    double average1 = taskADC.getAverage(1);
+                    double measured_v1 = average1 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP504_AI12 average:{0}, measured: {1}", average1, measured_v1);
+
+                    double result = measured_v0 - measured_v1;
+                    sMeasured = Convert.ToString(result);
+ 
+                    //check limitation
+                    if (PassFailJudge())
+                    {
+                        re = WORK_STATUS.PASS;
+                    }
+                    else
+                    {
+                        re = WORK_STATUS.FAIL;
+                    }
+                }
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    re = WORK_STATUS.FAIL;
+                }
+            }
+
+            return re;
+        }
+
+        public override void release()
+        {
+            taskADC = null;        //free memory
+        }
+    }
+
+
+    class TestItemStep120_P3 : TestItemForm
+    {
+        public string step = "120 P3";
+
+        public TestItemStep120_P3()
+        {
+            sStep = step;
+            LoadSpec();
+        }
+
+        public override WORK_STATUS Init()
+        {
+            
+            ushort DACval = 511;
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAir, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAred, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCA_I_DAC, DACval);
+            System.Threading.Thread.Sleep(200);
+
+            return WORK_STATUS.PASS;
+        }
+        public override WORK_STATUS Proccess()
+        {
+            sMeasured = "";
+            return WORK_STATUS.PASS;
+        }
+
+        public override void release()
+        {
+
+        }
+    }
+
+
+    class TestItemStep120_P4 : TestItemForm
+    {
+        public string step = "120 P4";
+        private DAQadc taskADC;
+        private double r1 = 133;
+        private double r2 = 133;
+        public TestItemStep120_P4()
+        {
+            sStep = step;
+            LoadSpec();
+        }
+
+        public override WORK_STATUS Init()
+        {
+            //DAQ setting
+            try
+            {
+                taskADC = new DAQadc(
+                    10000, 300, DAQadc.VOLTAGE_RANGE.RANGE_0_10);  //sample rate: 10000hz, sample time: 300ms, voltage range: 0~10v
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP501_AI4);
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP504_AI12);
+
+                if (taskADC.start())
+                    return WORK_STATUS.PASS;
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    return WORK_STATUS.FAIL;
+                }
+            }
+            catch (Exception e)
+            {
+                sMeasured = e.Message;
+                return WORK_STATUS.FAIL;
+            }
+        }
+
+        public override WORK_STATUS Proccess()
+        {
+            WORK_STATUS re = WORK_STATUS.WORKING;
+
+            if (taskADC.isEnable() == false)
+            {
+                if (taskADC.getErrorMsg() == null)      //must check if there were any error when DAQadc.callbackADC()
+                {
+                    double average0 = taskADC.getAverage(0);
+                    double measured_v0 = average0 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP501_AI4 average:{0}, measured: {1}", average0, measured_v0);
+
+                    double average1 = taskADC.getAverage(1);
+                    double measured_v1 = average1 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP504_AI12 average:{0}, measured: {1}", average1, measured_v1);
+
+                    double result = measured_v0 - measured_v1;
+                    sMeasured = Convert.ToString(result);
+
+                    //check limitation
+                    if (PassFailJudge())
+                    {
+                        re = WORK_STATUS.PASS;
+                    }
+                    else
+                    {
+                        re = WORK_STATUS.FAIL;
+                    }
+                }
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    re = WORK_STATUS.FAIL;
+                }
+            }
+
+            return re;
+        }
+
+        public override void release()
+        {
+            taskADC = null;        //free memory
+        }
+    }
+
+    class TestItemStep120_P5 : TestItemForm
+    {
+        public string step = "120 P5";
+
+        public TestItemStep120_P5()
+        {
+            sStep = step;
+            LoadSpec();
+        }
+
+        public override WORK_STATUS Init()
+        {
+            ushort DACval = 1023;
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAir, 0);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCAred, 1);
+            StaticValues.hwTestRPCDevice.SetPin(StaticValues.uC_SCA_I_DAC, DACval);
+            System.Threading.Thread.Sleep(200);
+
+            return WORK_STATUS.PASS;
+        }
+        public override WORK_STATUS Proccess()
+        {
+            sMeasured = "";
+            return WORK_STATUS.PASS;
+        }
+
+        public override void release()
+        {
+
+        }
+    }
+
+
+    class TestItemStep120_P6 : TestItemForm
+    {
+        public string step = "120 P6";
+        private DAQadc taskADC;
+        private double r1 = 133;
+        private double r2 = 133;
+        public TestItemStep120_P6()
+        {
+            sStep = step;
+            LoadSpec();
+        }
+
+        public override WORK_STATUS Init()
+        {
+            //DAQ setting
+            try
+            {
+                taskADC = new DAQadc(
+                    10000, 300, DAQadc.VOLTAGE_RANGE.RANGE_0_10);  //sample rate: 10000hz, sample time: 300ms, voltage range: 0~10v
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP501_AI4);
+                taskADC.addChannel(DAQ_USB6218.deviceName, DAQ_USB6218.TP504_AI12);
+
+                if (taskADC.start())
+                    return WORK_STATUS.PASS;
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    return WORK_STATUS.FAIL;
+                }
+            }
+            catch (Exception e)
+            {
+                sMeasured = e.Message;
+                return WORK_STATUS.FAIL;
+            }
+        }
+
+        public override WORK_STATUS Proccess()
+        {
+            WORK_STATUS re = WORK_STATUS.WORKING;
+
+            if (taskADC.isEnable() == false)
+            {
+                if (taskADC.getErrorMsg() == null)      //must check if there were any error when DAQadc.callbackADC()
+                {
+                    double average0 = taskADC.getAverage(0);
+                    double measured_v0 = average0 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP501_AI4 average:{0}, measured: {1}", average0, measured_v0);
+
+                    double average1 = taskADC.getAverage(1);
+                    double measured_v1 = average1 * (r1 + r2) / r2;
+                    Console.WriteLine("ai TP504_AI12 average:{0}, measured: {1}", average1, measured_v1);
+
+                    double result = measured_v0 - measured_v1;
+                    sMeasured = Convert.ToString(result);
+                    //check limitation
+                    if (PassFailJudge())
+                    {
+                        re = WORK_STATUS.PASS;
+                    }
+                    else
+                    {
+                        re = WORK_STATUS.FAIL;
+                    }
+                }
+                else
+                {
+                    sMeasured = taskADC.getErrorMsg();
+                    re = WORK_STATUS.FAIL;
+                }
+            }
+
+            return re;
+        }
+
+        public override void release()
+        {
+            taskADC = null;        //free memory
+        }
+    }
+   
+}
