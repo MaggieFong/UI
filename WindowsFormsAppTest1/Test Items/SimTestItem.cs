@@ -197,4 +197,10 @@ namespace WindowsFormsAppTest1.TestItem
         {
         }
     }
+
+    // Any step listed in Spec.ini (Sunstone Smart): value from the simulation CSV, spec from Spec.ini.
+    class SpecSimTestItem : SimTestItem
+    {
+        public SpecSimTestItem(string step) : base(step) { }
+    }
 }
