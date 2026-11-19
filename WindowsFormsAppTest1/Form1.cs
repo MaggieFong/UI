@@ -802,7 +802,7 @@ namespace WindowsFormsAppTest1
             testerInit();
 
             // maggie debug
-            SaveLog();
+            //SaveLog();
 
             if (jigNotClosed)
                 MessageBox.Show("Jig not closed properly, test stop!");
