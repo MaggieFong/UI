@@ -1,0 +1,141 @@
+Test Program: Philips Sunstone Tester_V1.1_20260728,,,,,,,
+Fixure ID: SUNSTONE-FCT04,,,,,,,
+EMP ID: M032040,,,,,,,
+Calibration: True,,,,,,,
+Offset: False,,,,,,,
+Part Number: 6696-200101-04,,,,,,,
+Serial Number: 9717622610240172,,,,,,,
+Test Time: 11/02/2026 01:29:09,,,,,,,
+===============================================================,,,,,,,
+,,,,,,,
+Step,Test,Measured,Offset,LL,UL,Error Code,Status
+_001,,@9717622610240172,,,,N/A,Pass
+_002 P1,Check Jig closed,TRUE,,,,SUNSTONE002,Pass
+_002 P2,Make sure all discharge resistors are disconnected,TRUE,,,,SUNSTONE003,Pass
+_006 P1,Measure supply voltage,19.49417809,,19.4,19.6,SUNSTONE004,Pass
+_006 P2,19.5 V supply current,0.03,,0.01,0.08,SUNSTONE005,Pass
+_007 P1,Measure 3V3 voltage,3.297656897,,3.26,3.34,SUNSTONE006,Pass
+_007 P2,Step2-program HWÃ£??¬binary,Error = 0,,,,SUNSTONE007,Pass
+_008 P1,Read version number,6,,6,6,SUNSTONE009,Pass
+_010 P1,Initialization of uC - Pin definitions,TRUE,,,,SUNSTONE010,Pass
+_010 P2,Initialization of uC - Configuration of the pins,TRUE,,,,SUNSTONE010,Pass
+_010 P3,Initialization of uC - Initialization of the outputs,TRUE,,,,SUNSTONE010,Pass
+_015 P1,Measure 3V3 current,0.121184511,,0.1,0.2,SUNSTONE038,Pass
+_015 P2,Measure 12V voltage,12.12817683,,11.5,12.5,SUNSTONE039,Pass
+_015 P3,Check disabled 12V voltage,0.001914115,,-0.1,2,SUNSTONE040,Pass
+_015 P4,Check Vmain voltage,19.480179,,19.4,19.6,SUNSTONE041,Pass
+_015 P5,12V voltage tristate,12.00704891,,11.5,12.5,SUNSTONE042,Pass
+_015 P6,Check driver support voltage,19.41391941,,19.1,19.9,SUNSTONE043,Pass
+_015 P7,Check D309,13.28113578,,12.9,14,SUNSTONE044,Pass
+_020 P1,Push button - UIButtonON,TRUE,,,,SUNSTONE011,Pass
+_020 P2,Push button - UIButtonFlash,TRUE,,,,SUNSTONE011,Pass
+_021 P1,all LEDs are switched on,,,,,SUNSTONE012,Pass
+_021 P2,Measure upper D500 intensity,77256,,60000,100000,SUNSTONE013,Pass
+_021 P3,Measure D500 CCT,6040,,5000,10000,SUNSTONE013,Pass
+_021 P4,Measure upper D510 intensity,77069,,60000,100000,SUNSTONE014,Pass
+_021 P5,Measure D510 CCT,6482,,5000,10000,SUNSTONE014,Pass
+_021 P6,Measure upper D501 intensity,92826,,60000,100000,SUNSTONE015,Pass
+_021 P7,Measure D501 CCT,5873,,5000,10000,SUNSTONE015,Pass
+_021 P8,Measure upper D511 intensity,80997,,60000,100000,SUNSTONE016,Pass
+_021 P9,Measure D511 CCT,5873,,5000,10000,SUNSTONE016,Pass
+_021 P10,Measure upper D502 intensity,72410,,60000,100000,SUNSTONE017,Pass
+_021 P11,Measure D502 CCT,6849,,5000,10000,SUNSTONE017,Pass
+_021 P12,Measure bottom orange D505 intensity,16646,,10000,30000,SUNSTONE018,Pass
+_021 P13,Measure D505 Wavelength,604,,600,622,SUNSTONE018,Pass
+_021 P14,Measure bottom orange D514 intensity,17346,,10000,30000,SUNSTONE019,Pass
+_021 P15,Measure D514 Wavelength,602,,600,622,SUNSTONE019,Pass
+_021 P16,Measure bottom orange D523 intensity,12804,,10000,30000,SUNSTONE020,Pass
+_021 P17,Measure D523 Wavelength,605,,600,622,SUNSTONE020,Pass
+_021 P18,Measure bottom orange D527 intensity,12804,,10000,30000,SUNSTONE021,Pass
+_021 P19,Measure D527 Wavelength,605,,600,622,SUNSTONE021,Pass
+_021 P20,Measure bottom orange D528 intensity,19278,,10000,30000,SUNSTONE022,Pass
+_021 P21,Measure D528 Wavelength,604,,600,622,SUNSTONE022,Pass
+_021 P22,Measure bottom orange D524 intensity,14941,,10000,30000,SUNSTONE023,Pass
+_021 P23,Measure D524 Wavelength,606,,600,622,SUNSTONE023,Pass
+_021 P24,Measure bottom orange D515 intensity,16173,,10000,30000,SUNSTONE024,Pass
+_021 P25,Measure D515 Wavelength,606,,600,622,SUNSTONE024,Pass
+_021 P26,Measure bottom orange D506 intensity,17937,,10000,30000,SUNSTONE025,Pass
+_021 P27,Measure D506 Wavelength,605,,600,622,SUNSTONE025,Pass
+_021 P28,Measure bottom white D507 intensity,19686,,10000,47000,SUNSTONE026,Pass
+_021 P29,Measure D507 CCT,5887,,5000,10000,SUNSTONE026,Pass
+_021 P30,Measure bottom white D516 intensity,22866,,10000,47000,SUNSTONE027,Pass
+_021 P31,Measure D516 CCT,6000,,5000,10000,SUNSTONE027,Pass
+_021 P32,Measure bottom white D525 intensity,26948,,10000,47000,SUNSTONE028,Pass
+_021 P33,Measure D525 CCT,5630,,5000,10000,SUNSTONE028,Pass
+_021 P34,Measure bottom white D521 intensity,30838,,10000,47000,SUNSTONE029,Pass
+_021 P35,Measure D521 CCT,6000,,5000,10000,SUNSTONE029,Pass
+_021 P36,Measure bottom white D520 intensity,27786,,10000,47000,SUNSTONE030,Pass
+_021 P37,Measure D520 CCT,5636,,5000,10000,SUNSTONE030,Pass
+_021 P38,Measure bottom white D522 intensity,29494,,10000,47000,SUNSTONE031,Pass
+_021 P39,Measure D522 CCT,5765,,5000,10000,SUNSTONE031,Pass
+_021 P40,Measure bottom white D526 intensity,22160,,10000,47000,SUNSTONE032,Pass
+_021 P41,Measure D526 CCT,6813,,5000,10000,SUNSTONE032,Pass
+_021 P42,Measure bottom white D517 intensity,31876,,10000,47000,SUNSTONE033,Pass
+_021 P43,Measure D517 CCT,6638,,5000,10000,SUNSTONE033,Pass
+_021 P44,Measure bottom white D508 intensity,32321,,10000,47000,SUNSTONE034,Pass
+_021 P45,Measure D508 CCT,5870,,5000,10000,SUNSTONE034,Pass
+_021 P46,Measure upper orange D631 intensity,21592,,15000,30000,SUNSTONE035,Pass
+_021 P47,Measure D631 Wavelength,605,,599,613,SUNSTONE035,Pass
+_021 P48,Switch LEDs off,TRUE,,,,SUNSTONE012,Pass
+_082 P1,Check Vfan+,11.86170522,,11,13,SUNSTONE045,Pass
+_082 P2,Check Vfan- low,0.07939146,,-0.1,0.3,SUNSTONE046,Pass
+_082 P3,Check Vfan- high,12.10730366,,11.3,12.5,SUNSTONE047,Pass
+_085 P1,PCBA temperature sensor (air out),1.544029304,,0.959,2,SUNSTONE048,Pass
+_085 P2,Check air out temperature sensor NTC,1.542041076,,0.959,2,SUNSTONE048,Pass
+_085 P3,Compare software(P1) and instrument(P2) values,0.001988229,,-0.05,0.05,SUNSTONE049,Pass
+_085 P4,PCBA temperature sensor (Lampframe_TC),0.34007326,,0.195,0.655,SUNSTONE050,Pass
+_085 P5,Check Thermal cutout temperature sensor NTC,0.341397576,,0.195,0.655,SUNSTONE050,Pass
+_085 P6,Compare software(P4) and instrument(P5) values,-0.001324315,,-0.05,0.05,SUNSTONE049,Pass
+_085 P7,Measure Q203-E voltage with thermal cutoff triggered,3.276961197,,3.1,3.5,SUNSTONE051,Pass
+_085 P8,Measure Q203-E voltage with relay opened,0.101756016,,0.05,0.2,SUNSTONE051,Pass
+_097,Discharge flashcap; set initial condition,TRUE,,,,SUNSTONE01,Pass
+_100 P1,Charge time flashcap,0.45,,0.2,0.8,SUNSTONE053,Pass
+_100 P2,Flash cap voltage End Value,404.2036439,,394,413,SUNSTONE054,Pass
+_100 P3,Flash cap voltage max Value,403.8437118,,392,413.5,SUNSTONE054,Pass
+_100 P4,Flash cap voltage NI,406.7,,397.5,409.5,SUNSTONE054,Pass
+_100 P5,Lamp voltage max value,407.5156695,,396,416,SUNSTONE055,Pass
+_100 P6,VFC_BeginStopCharging,230.8603893,,100,360,SUNSTONE056,Pass
+_100 P7,VFC_difference begin end,-4.211204482,,-10,0,SUNSTONE056,Pass
+_100 P8,Vlamp_BeginStopCharging,407.564591,,395,416,SUNSTONE057,Pass
+_100 P13,NI Vlamp Pos conv off,315,,250,350,SUNSTONE057,Pass
+_100 P9,Vlamp_EndStopCharging,407.7113553,,395,416,SUNSTONE057,Pass
+_100 P10,Vlamp Pos NI,406.6,,397.5,409.5,SUNSTONE057,Pass
+_100 P11,Vlamp Neg NI,-393.7,,-404,-376,SUNSTONE057,Pass
+_100 P12,IGBT active,0.733821734,,-2,5,SUNSTONE058,Pass
+_110 P1,Discharge Resistor,7338.443452,,7125,7875,SUNSTONE059,Pass
+_110 P2,Discharger emitter current,0,,-1,1,SUNSTONE059,Pass
+_110 P3,Discharge Resistor,7321.215043,,7125,7875,SUNSTONE059,Pass
+_117 P1,Check Attachment Connect,1,,1,1,SUNSTONE060,Pass
+_117 P2,Check Attachment_conn_1,3.263439181,,2.9,3.4,SUNSTONE060,Pass
+_117 P3,Switch on relay TP512 (and leave on),3.84E-05,,-0.1,0.1,SUNSTONE060,Pass
+_117 P4,Check Attachment_conn,2.857350639,,2.3,3.05,SUNSTONE060,Pass
+_117 P5,Check Attachment Connect,1,,1,1,SUNSTONE060,Pass
+_117 P6,Check Attachment_conn_2,3.242087444,,2.9,3.4,SUNSTONE060,Pass
+_117 P7,Switch on relay TP517 (and leave on),-0.000218475,,-0.1,0.1,SUNSTONE060,Pass
+_117 P8,Check Attachment_conn,2.775331084,,2.3,3.05,SUNSTONE060,Pass
+_117 P9,Check Attachment Connect,1,,1,1,SUNSTONE060,Pass
+_117 P10,Check Attachment_conn_3,3.192330286,,2.9,3.4,SUNSTONE060,Pass
+_117 P11,Switch on relay TP518 (and leave on),-3.65E-05,,-0.1,0.1,SUNSTONE060,Pass
+_117 P12,Check Attachment_conn,0.0159381023083597,,-0.1,0.1,SUNSTONE060,Fail
+_117 P13,Check Attachment Connect,0,,0,0,SUNSTONE060,Pass
+_120 P1,STS IR DAC setting 511,TRUE,,,,SUNSTONE061,Pass
+_120 P2,Measure RED LED current (in 100 Ohm),0.762514582,,0.73,0.801,SUNSTONE061,Pass
+_130 P1,STS IR DAC setting 511,TRUE,,,,SUNSTONE062,Pass
+_130 P2,Measure IR LED current (in 150 Ohm),1.147065571,,1.096,1.202,SUNSTONE062,Pass
+_135 P1,Attachment temperature sensor,1.1,,1.05,1.15,SUNSTONE063,Pass
+_135 P2,Check SCA_temp sensor NTC,1.099406078,,1.05,1.15,SUNSTONE063,Pass
+_135 P3,Compare SCA_temp,0.000593922,,-0.05,0.05,SUNSTONE063,Pass
+_135 P4,Attachment phototransistor,1.1,,1.05,1.15,SUNSTONE063,Pass
+_135 P5,Check SCA_sensor Phototransistor,1.099228198,,1.05,1.15,SUNSTONE063,Pass
+_135 P6,Compare SCA_temp(P2) & SCA_sensor(P4),0.000771802,,-0.05,0.05,SUNSTONE063,Pass
+_137 P1,Attachment EEPROM test,PASS,,,,SUNSTONE064,Pass
+_137 P2,+3V3_switch supply disabled,0.2,,-0.1,0.3,SUNSTONE064,Pass
+_22.18.1,Load correct firmware version into the DUT,Error = 0,,,,SUNSTONE007,Pass
+_22.18.2,Verify programming,TRUE,,,,SUNSTONE007,Pass
+_22.18.3,Check 19.5 V supply current,0.03,,0.02,0.08,SUNSTONE005,Pass
+_22.18.4,Check setting 1 LED is ON,TRUE,,,,N/A,Pass
+_22.18.5,Read FW version,20260310-1427,,20260310-1427,20260310-1427,SUNSTONE007,Pass
+_22.18.6,DISCHARGE ALL CAPACITORS < 100Volt,TRUE,,,,N/A,Pass
+_22.18.7,Report to operator Pass/fail,TRUE,,,,N/A,Pass
+_22.18.8,Store test results,TRUE,,,,N/A,Pass
+_END,Time Measurement,36.955,,,,,Pass

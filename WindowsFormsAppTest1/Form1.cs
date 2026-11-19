@@ -100,16 +100,16 @@ namespace WindowsFormsAppTest1
             initConfig();
             InitTxtLog();
             //---------------------------------------
-            if (!dllCrcList())
-            {
-                CancelDisplayForm = true;
-            }
+            //if (!dllCrcList())
+            //{
+            //    CancelDisplayForm = true;
+            //}
 
-            if (!codeCrcList())
-            {
-                MessageBox.Show("Show FW list fail");
-                CancelDisplayForm = true;
-            }            
+            //if (!codeCrcList())
+            //{
+            //    MessageBox.Show("Show FW list fail");
+            //    CancelDisplayForm = true;
+            //}            
 
             gridViewTest.DoubleBuffered(true);
             gridViewFW.DoubleBuffered(true);

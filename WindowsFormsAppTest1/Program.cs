@@ -27,7 +27,7 @@ namespace WindowsFormsAppTest1
             }
             else if (args.Length == 0)
             {
-                MessageBox.Show("[WARNING] 人員手動開啟,進入Dubug Mode");
+               // MessageBox.Show("[WARNING] 人員手動開啟,進入Dubug Mode");
                 mode = "debug";
                 
             }
