@@ -20,7 +20,25 @@ namespace WindowsFormsAppTest1
 
             // Sunstone Smart (simulation): the test steps are the rows of the tester log (config.ini
             // [Simulation] CSV_File), in log order; name, limits and error code come from the log.
-            foreach (string[] row in SimData.ReadLogSteps(Config.fileSimCsv))
+            string log = Config.fileSimCsv;
+            if (string.IsNullOrEmpty(log) || !System.IO.File.Exists(log))
+            {
+                // config.ini [Simulation] CSV_File not set: ask for the tester log
+                using (System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog())
+                {
+                    dlg.Title = "Select tester log (simulation CSV)";
+                    dlg.Filter = "Tester log (*.csv)|*.csv";
+                    if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                    {
+                        System.Windows.Forms.MessageBox.Show("No tester log selected: the test item list is empty.\n" +
+                            "Set config.ini [Simulation] CSV_File to the tester log.");
+                        return;
+                    }
+                    log = dlg.FileName;
+                    Config.fileSimCsv = log;
+                }
+            }
+            foreach (string[] row in SimData.ReadLogSteps(log))
                 arrayTestItems.Add(new LogSimTestItem(row));
         }
 
