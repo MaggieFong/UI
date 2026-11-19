@@ -61,10 +61,12 @@ namespace WindowsFormsAppTest1
             labelTestResult.Text = "N/A";
             progressBar1.Value = 0;
             TestItemInit();
-            // Golden.verified is set for batch mode, so the judge adds the golden offset:
-            // use 0 so the simulated values are judged as they are in the CSV.
+            // No golden offset in batch mode: values are judged as they are in the CSV, Offset column stays blank.
             for (int i = 0; i < dTotalTestSteps; i++)
-                testItems.getTestItem(i).sOffset = "0";
+            {
+                testItems.getTestItem(i).bNeedOffset = false;
+                testItems.getTestItem(i).sOffset = "";
+            }
             StaticValues.sBarCode = "@" + sn;
 
             TaskCompletionSource<bool> done = new TaskCompletionSource<bool>();
