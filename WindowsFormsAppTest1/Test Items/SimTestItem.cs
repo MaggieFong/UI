@@ -15,7 +15,7 @@ namespace WindowsFormsAppTest1.TestItem
     /// </summary>
     static class SimData
     {
-        public const string DefaultCsvName = "9717622610240172_012909.csv";
+        public const string DefaultCsvName = "4455112610190931_044509.csv";   // Sunstone Smart tester log
 
         private static readonly object lockObj = new object();
         private static Dictionary<string, string> measured;
