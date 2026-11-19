@@ -1471,7 +1471,7 @@ namespace WindowsFormsAppTest1
 
         private void TestItemInit()
         {
-            for (int i = 0; i < dTotalTestSteps; i++)
+            for (int i = 0; i < dTotalTestSteps && i < gridViewTest.Rows.Count; i++)
             {
                 gridViewTest.Rows[i].Cells[COL_NUM_MEASURED].Value = "";
                 gridViewTest.Rows[i].Cells[COL_NUM_STATUS].Value = "";
@@ -1485,7 +1485,7 @@ namespace WindowsFormsAppTest1
 
             ScrollFirstRow(0);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3 && i < gridViewFW.Rows.Count; i++)     // FW list can be empty in simulation
             {
                 gridViewFW.Rows[i].Cells[COL_SFIS_CRC].Value = "";
             }
