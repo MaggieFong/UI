@@ -156,6 +156,9 @@
     <Compile Include="Test Items\TestItemStep015.cs" />
     <Compile Include="Test Items\TestItemStep22.cs" />
     <Compile Include="Test Items\SimTestItem.cs" />
+    <Compile Include="EvidenceBatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Test Items\TestItemStep020.cs" />
     <Compile Include="Test Items\TestItemStep021.cs" />
     <Compile Include="Test Items\TestItemStep082.cs" />

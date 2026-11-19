@@ -18,7 +18,14 @@ namespace WindowsFormsAppTest1
         static void Main(string[] args)
         {
             string mode = "";
-            if (args.Length == 0)
+            // Evidence batch: WindowsFormsAppTest1.exe --evidence <csv folder> <png output folder>
+            if (args.Length >= 3 && args[0] == "--evidence")
+            {
+                StaticValues.evidenceCsvDir = args[1];
+                StaticValues.evidenceOutDir = args[2];
+                mode = "debug";
+            }
+            else if (args.Length == 0)
             {
                 MessageBox.Show("[WARNING] 人員手動開啟,進入Dubug Mode");
                 mode = "debug";

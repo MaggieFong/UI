@@ -19,6 +19,17 @@ namespace WindowsFormsAppTest1.TestItem
 
         private static readonly object lockObj = new object();
         private static Dictionary<string, string> measured;
+        private static HashSet<string> forcedFail;   // steps whose Status column (H) is "Fail"
+
+        /// <summary>Drop the loaded data so the next access reloads from CsvPath (evidence batch mode).</summary>
+        public static void Reset()
+        {
+            lock (lockObj)
+            {
+                measured = null;
+                forcedFail = null;
+            }
+        }
 
         public static string CsvPath
         {
@@ -43,6 +54,7 @@ namespace WindowsFormsAppTest1.TestItem
                     throw new FileNotFoundException("Simulation CSV not found: " + path);
 
                 Dictionary<string, string> data = new Dictionary<string, string>();
+                HashSet<string> fails = new HashSet<string>();
                 bool inTable = false;
 
                 foreach (string line in File.ReadAllLines(path, Encoding.Default))
@@ -67,6 +79,10 @@ namespace WindowsFormsAppTest1.TestItem
                     if (!data.ContainsKey(step))
                         data.Add(step, value);
 
+                    // column H "Status" = Fail -> this step is forced to fail (failure mode evidence)
+                    if (fields.Count > 7 && string.Equals(fields[7].Trim(), "Fail", StringComparison.OrdinalIgnoreCase))
+                        fails.Add(step);
+
                     if (step == "_END")
                         break;      // rows after _END are raw waveform data
                 }
@@ -75,8 +91,16 @@ namespace WindowsFormsAppTest1.TestItem
                     throw new InvalidDataException("Simulation CSV has no \"Step,Test,Measured\" header: " + path);
 
                 measured = data;
-                Console.WriteLine("[SIM] Loaded {0} steps from {1}", data.Count, path);
+                forcedFail = fails;
+                Console.WriteLine("[SIM] Loaded {0} steps ({1} forced fail) from {2}", data.Count, fails.Count, path);
             }
+        }
+
+        /// <summary>True if the step's Status column in the simulation CSV is "Fail".</summary>
+        public static bool IsForcedFail(string step)
+        {
+            EnsureLoaded();
+            return forcedFail.Contains(step);
         }
 
         /// <summary>Column C value for the step, or "" if the step is not in the CSV.</summary>
@@ -157,6 +181,8 @@ namespace WindowsFormsAppTest1.TestItem
             try
             {
                 sMeasured = SimData.GetMeasured(sStep);
+                if (SimData.IsForcedFail(sStep))
+                    return WORK_STATUS.FAIL;
             }
             catch (Exception e)
             {

@@ -19,6 +19,10 @@ public class StaticValues
     // Simulation mode: no instrument / DUT / SFIS access, test values come from the simulation CSV
     public static bool SIMULATION = true;
 
+    // Evidence batch mode (--evidence <csv folder> <png output folder>): null = normal operation
+    public static string evidenceCsvDir;
+    public static string evidenceOutDir;
+
     public static bool goldenTest;
 
     // step compare

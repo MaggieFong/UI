@@ -154,6 +154,9 @@ namespace WindowsFormsAppTest1
 
         private void PhilipsEmeraldTestTool_Load(object sender, EventArgs e)
         {
+            if (StaticValues.evidenceCsvDir != null)
+                this.Shown += EvidenceBatch_Shown;      // --evidence batch mode
+
             
             if (StaticValues.MODE == "debug")
             {
