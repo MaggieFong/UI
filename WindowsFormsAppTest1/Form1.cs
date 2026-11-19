@@ -1210,6 +1210,14 @@ namespace WindowsFormsAppTest1
                 Config.fileCounter = iniConfig.iniReadValue("Path", "Counter", null) + "Counter.ini";
                 Config.fileCalibration = iniConfig.iniReadValue("Path", "Product Setting", null) + "Calibration.ini";
                 Config.fileSimCsv = iniConfig.iniReadValue("Simulation", "CSV_File", "");
+                // evidence batch: the test steps come from the batch's own tester log CSV files
+                if (StaticValues.evidenceCsvDir != null && Directory.Exists(StaticValues.evidenceCsvDir))
+                {
+                    string[] batch = Directory.GetFiles(StaticValues.evidenceCsvDir, "*.csv");
+                    Array.Sort(batch, StringComparer.OrdinalIgnoreCase);
+                    if (batch.Length > 0)
+                        Config.fileSimCsv = batch[0];
+                }
 
                 Config.sfisIp = iniConfig.iniReadValue("SFIS", "Ip", "");
                 Config.sfisPort = Convert.ToInt32(iniConfig.iniReadValue("SFIS", "Port", "1024"));

@@ -18,21 +18,10 @@ namespace WindowsFormsAppTest1
         {
             arrayTestItems = new ArrayList();
 
-            // Sunstone Smart (simulation): the test steps are the [TestStep/...] sections of Spec.ini, in file order.
-            foreach (string step in SpecSteps(Config.fileSpec))
-                arrayTestItems.Add(new SpecSimTestItem(step));
-        }
-
-        private static List<string> SpecSteps(string specFile)
-        {
-            List<string> steps = new List<string>();
-            foreach (string raw in System.IO.File.ReadAllLines(specFile))
-            {
-                string line = raw.Trim();
-                if (line.StartsWith("[TestStep/") && line.EndsWith("]"))
-                    steps.Add(line.Substring("[TestStep/".Length, line.Length - "[TestStep/".Length - 1));
-            }
-            return steps;
+            // Sunstone Smart (simulation): the test steps are the rows of the tester log (config.ini
+            // [Simulation] CSV_File), in log order; name, limits and error code come from the log.
+            foreach (string[] row in SimData.ReadLogSteps(Config.fileSimCsv))
+                arrayTestItems.Add(new LogSimTestItem(row));
         }
 
         public int getTestItemsCount()

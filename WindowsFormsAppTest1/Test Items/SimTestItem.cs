@@ -96,6 +96,52 @@ namespace WindowsFormsAppTest1.TestItem
             }
         }
 
+        /// <summary>Step rows of the tester log, in order up to and including _END: step, test, LL, UL, error code.</summary>
+        public static List<string[]> ReadLogSteps(string path)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException("Tester log (simulation CSV) not found: " + path);
+            List<string[]> rows = new List<string[]>();
+            bool inTable = false;
+            foreach (string line in File.ReadAllLines(path, Encoding.Default))
+            {
+                List<string> f = SplitCsvLine(line);
+                if (f.Count == 0)
+                    continue;
+                if (!inTable)
+                {
+                    inTable = f.Count >= 3 && f[0].Trim() == "Step" && f[2].Trim() == "Measured";
+                    continue;
+                }
+                string step = f[0].Trim();
+                if (step.Length == 0)
+                    continue;
+                while (f.Count < 8)
+                    f.Add("");
+                rows.Add(new string[] { step, CleanName(f[1]), f[4].Trim(), f[5].Trim(), f[6].Trim() });
+                if (step == "_END")
+                    break;
+            }
+            return rows;
+        }
+
+        // log names can hold broken full-width characters: keep printable ASCII only
+        private static string CleanName(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool gap = false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                bool bad = c < 0x20 || c > 0x7e || (c == '?' && i + 1 < s.Length && s[i + 1] > 0x7e);
+                if (bad) { gap = true; continue; }
+                if (gap && sb.Length > 0 && sb[sb.Length - 1] != ' ' && c != ' ') sb.Append(' ');
+                gap = false;
+                sb.Append(c);
+            }
+            return sb.ToString().Trim();
+        }
+
         /// <summary>True if the step's Status column in the simulation CSV is "Fail".</summary>
         public static bool IsForcedFail(string step)
         {
@@ -162,6 +208,13 @@ namespace WindowsFormsAppTest1.TestItem
             LoadSpec();
         }
 
+        // spec from the tester log row instead of Spec.ini
+        protected SimTestItem(string step, string test, string lowerLimit, string upperLimit, string errorCode)
+        {
+            sStep = step;
+            SetSpec(test, lowerLimit, upperLimit, errorCode);
+        }
+
         public override WORK_STATUS Init()
         {
             try
@@ -198,9 +251,9 @@ namespace WindowsFormsAppTest1.TestItem
         }
     }
 
-    // Any step listed in Spec.ini (Sunstone Smart): value from the simulation CSV, spec from Spec.ini.
-    class SpecSimTestItem : SimTestItem
+    // Sunstone Smart: one item per tester log row; spec (name, LL, UL, error code) and value from the log.
+    class LogSimTestItem : SimTestItem
     {
-        public SpecSimTestItem(string step) : base(step) { }
+        public LogSimTestItem(string[] row) : base(row[0], row[1], row[2], row[3], row[4]) { }
     }
 }

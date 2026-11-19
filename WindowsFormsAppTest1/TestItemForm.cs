@@ -217,6 +217,23 @@
             }
         }
 
+        /// <summary>Spec from a tester log row (Sunstone Smart simulation): limits -> high/low judge, else value only.</summary>
+        public void SetSpec(string test, string lowerLimit, string upperLimit, string errorCode)
+        {
+            sTest = test;
+            sLowerLimit = lowerLimit;
+            sUpperLimit = upperLimit;
+            sOffsetLimit = "N/A";
+            sErrorCode = errorCode;
+            sOffset = "";
+            sGoldenValue = "N/A";
+            bResult = false;
+            bNeedOffset = false;
+            bool limits = lowerLimit.Length > 0 && upperLimit.Length > 0;
+            sType = limits ? "1" : "0";
+            eType = limits ? PASSFAIL_JUDGE_TYPE.HIGH_LOW_LIMIT : PASSFAIL_JUDGE_TYPE.JUST_HAVE_VALUE;
+        }
+
         public void LoadCalibratedValue(string fixture)
         {
             TIniFile iniCalibration = new TIniFile(Config.fileCalibration);
